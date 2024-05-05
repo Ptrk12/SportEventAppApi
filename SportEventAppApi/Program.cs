@@ -1,4 +1,4 @@
-
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SportEventAppApi.Config;
 
@@ -14,8 +14,14 @@ namespace SportEventAppApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //sql con
             builder.Services.AddDbContext<SportEventAppDbContext>(
                  options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnectionString")));
+
+            //identity
+            builder.Services.AddAuthorization();
+            builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+                .AddEntityFrameworkStores<SportEventAppDbContext>();
 
             var app = builder.Build();
 
@@ -25,6 +31,8 @@ namespace SportEventAppApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            //identity
+            app.MapIdentityApi<IdentityUser>();
 
             app.UseHttpsRedirection();
 
