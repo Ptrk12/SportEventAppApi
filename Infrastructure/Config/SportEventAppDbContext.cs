@@ -3,7 +3,6 @@ using Infrastructure.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System.Xml;
 
 
 namespace SportEventAppApi.Config
@@ -17,6 +16,14 @@ namespace SportEventAppApi.Config
         public DbSet<ObjectEntity> Objects { get; set; }
         public DbSet<SportEventEntity> SportEvents { get; set; }
         public DbSet<TopObjectsEntity> TopObjects { get; set; }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            base.OnConfiguring(optionsBuilder);
+
+            optionsBuilder.UseSqlServer(
+                "Server=DESKTOP-BORRVIJ;Database=SportEventApp;Trusted_Connection=True;TrustServerCertificate=True;");
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

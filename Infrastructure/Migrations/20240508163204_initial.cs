@@ -5,10 +5,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
 
-namespace SportEventAppApi.Migrations
+namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class SeedData : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -237,8 +237,8 @@ namespace SportEventAppApi.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", 0, "51ace4f4-8ad6-4cbc-bf44-5da0326486f5", "myuser@email.com", false, false, null, "MYUSER@EMAIL.COM", "MYUSER@EMAIL.COM", "AQAAAAIAAYagAAAAEMJFzdJajEjdU4mFxJ6ocrC+oGI+HqCIToQ0BJCRpQbXrEvEgKeiTjgHlw4PjtjXjg==", null, false, "14f11149-9d11-4524-bb8d-7bd57fba024d", false, "myuser@email.com" },
-                    { "d3e7c295-d723-4d8e-8c39-be6107f44020", 0, "0c8a90a2-26c6-41eb-82c8-694f031562fd", "admin@email.com", false, false, null, "ADMIN@EMAIL.COM", "ADMIN@EMAIL.COM", "AQAAAAIAAYagAAAAEKus75IdXI2W24ISq9EFLtAHklbOFeIho2Sw3PV5n5cdrLk0MKXUrMysXw9UAIiUWQ==", null, false, "5c766d4f-2e4b-477a-bef2-71239c821a33", false, "admin@email.com" }
+                    { "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", 0, "2cf05497-8192-4932-8b7e-ac149a956a4d", "myuser@email.com", false, false, null, "MYUSER@EMAIL.COM", "MYUSER@EMAIL.COM", "AQAAAAIAAYagAAAAEOXPVN5BFfxAhgG3Ch2va7V3rm3YhaiJ1uUgOjazAMtGFSOosp3L9QTlZUzOKt5QuQ==", null, false, "bc600970-5560-415d-9f6c-475ed22248a7", false, "myuser@email.com" },
+                    { "d3e7c295-d723-4d8e-8c39-be6107f44020", 0, "f6b0325c-60b2-417d-8d56-0955fd210d3e", "admin@email.com", false, false, null, "ADMIN@EMAIL.COM", "ADMIN@EMAIL.COM", "AQAAAAIAAYagAAAAELZ5tS0qBKfkrrzcWZx9EZXPs2v3t9ePjuld2fQ+q3dLEABZT0jat4LuwFeHZ8iRAA==", null, false, "bfc08c7c-b016-42c6-8f26-03fe6c5a34b3", false, "admin@email.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -276,9 +276,9 @@ namespace SportEventAppApi.Migrations
                 columns: new[] { "Id", "AmountOfPlayers", "CreatedBy", "DateWhen", "Description", "Discipline", "Name", "ObjectId", "Price", "SkillLevel", "Time" },
                 values: new object[,]
                 {
-                    { 1, 12, "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", new DateTime(2024, 5, 5, 16, 36, 17, 960, DateTimeKind.Local).AddTicks(8639), "Desc 1", "Football", "", 14, 20.0m, "Amateur", 60 },
-                    { 2, 6, "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", new DateTime(2024, 5, 5, 16, 36, 17, 960, DateTimeKind.Local).AddTicks(8753), "Desc 2", "Football", "", 4, 22.0m, "Amateur", 30 },
-                    { 3, 10, "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", new DateTime(2024, 5, 5, 16, 36, 17, 960, DateTimeKind.Local).AddTicks(8780), "Desc 3", "Football", "", 12, 23.0m, "Amateur", 120 }
+                    { 1, 12, "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", new DateTime(2024, 5, 8, 18, 32, 3, 701, DateTimeKind.Local).AddTicks(9698), "Desc 1", "Football", "", 14, 20.0m, "Amateur", 60 },
+                    { 2, 6, "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", new DateTime(2024, 5, 8, 18, 32, 3, 701, DateTimeKind.Local).AddTicks(9905), "Desc 2", "Football", "", 4, 22.0m, "Amateur", 30 },
+                    { 3, 10, "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", new DateTime(2024, 5, 8, 18, 32, 3, 701, DateTimeKind.Local).AddTicks(9994), "Desc 3", "Football", "", 12, 23.0m, "Amateur", 120 }
                 });
 
             migrationBuilder.InsertData(

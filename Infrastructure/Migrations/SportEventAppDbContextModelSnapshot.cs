@@ -8,7 +8,7 @@ using SportEventAppApi.Config;
 
 #nullable disable
 
-namespace SportEventAppApi.Migrations
+namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SportEventAppDbContext))]
     partial class SportEventAppDbContextModelSnapshot : ModelSnapshot
@@ -238,7 +238,7 @@ namespace SportEventAppApi.Migrations
                             Id = 1,
                             AmountOfPlayers = 12,
                             CreatedBy = "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612",
-                            DateWhen = new DateTime(2024, 5, 5, 16, 36, 17, 960, DateTimeKind.Local).AddTicks(8639),
+                            DateWhen = new DateTime(2024, 5, 8, 18, 32, 3, 701, DateTimeKind.Local).AddTicks(9698),
                             Description = "Desc 1",
                             Discipline = "Football",
                             Name = "",
@@ -252,7 +252,7 @@ namespace SportEventAppApi.Migrations
                             Id = 2,
                             AmountOfPlayers = 6,
                             CreatedBy = "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612",
-                            DateWhen = new DateTime(2024, 5, 5, 16, 36, 17, 960, DateTimeKind.Local).AddTicks(8753),
+                            DateWhen = new DateTime(2024, 5, 8, 18, 32, 3, 701, DateTimeKind.Local).AddTicks(9905),
                             Description = "Desc 2",
                             Discipline = "Football",
                             Name = "",
@@ -266,7 +266,7 @@ namespace SportEventAppApi.Migrations
                             Id = 3,
                             AmountOfPlayers = 10,
                             CreatedBy = "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612",
-                            DateWhen = new DateTime(2024, 5, 5, 16, 36, 17, 960, DateTimeKind.Local).AddTicks(8780),
+                            DateWhen = new DateTime(2024, 5, 8, 18, 32, 3, 701, DateTimeKind.Local).AddTicks(9994),
                             Description = "Desc 3",
                             Discipline = "Football",
                             Name = "",
@@ -453,15 +453,15 @@ namespace SportEventAppApi.Migrations
                         {
                             Id = "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "51ace4f4-8ad6-4cbc-bf44-5da0326486f5",
+                            ConcurrencyStamp = "2cf05497-8192-4932-8b7e-ac149a956a4d",
                             Email = "myuser@email.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "MYUSER@EMAIL.COM",
                             NormalizedUserName = "MYUSER@EMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEMJFzdJajEjdU4mFxJ6ocrC+oGI+HqCIToQ0BJCRpQbXrEvEgKeiTjgHlw4PjtjXjg==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOXPVN5BFfxAhgG3Ch2va7V3rm3YhaiJ1uUgOjazAMtGFSOosp3L9QTlZUzOKt5QuQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "14f11149-9d11-4524-bb8d-7bd57fba024d",
+                            SecurityStamp = "bc600970-5560-415d-9f6c-475ed22248a7",
                             TwoFactorEnabled = false,
                             UserName = "myuser@email.com"
                         },
@@ -469,15 +469,15 @@ namespace SportEventAppApi.Migrations
                         {
                             Id = "d3e7c295-d723-4d8e-8c39-be6107f44020",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0c8a90a2-26c6-41eb-82c8-694f031562fd",
+                            ConcurrencyStamp = "f6b0325c-60b2-417d-8d56-0955fd210d3e",
                             Email = "admin@email.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN@EMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKus75IdXI2W24ISq9EFLtAHklbOFeIho2Sw3PV5n5cdrLk0MKXUrMysXw9UAIiUWQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAELZ5tS0qBKfkrrzcWZx9EZXPs2v3t9ePjuld2fQ+q3dLEABZT0jat4LuwFeHZ8iRAA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "5c766d4f-2e4b-477a-bef2-71239c821a33",
+                            SecurityStamp = "bfc08c7c-b016-42c6-8f26-03fe6c5a34b3",
                             TwoFactorEnabled = false,
                             UserName = "admin@email.com"
                         });
