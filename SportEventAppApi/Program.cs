@@ -1,3 +1,5 @@
+using Infrastructure.Repositories;
+using Managers.managers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using SportEventAppApi.Config;
@@ -14,9 +16,15 @@ namespace SportEventAppApi
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
 
+            //services repo
+            builder.Services.AddScoped<ISportEventsRepository,SportEventsRepository>();
+            builder.Services.AddScoped<IObjectRepository,ObjectRepository>();
+
+            //services mang
+            builder.Services.AddScoped<ISportEventManager, SportEventManager>();
+
             //sql con
-            builder.Services.AddDbContext<SportEventAppDbContext>(
-                 options => options.UseSqlServer(builder.Configuration.GetConnectionString("SqlConnectionString")));
+            builder.Services.AddDbContext<SportEventAppDbContext>();
 
             //identity
             builder.Services.AddAuthorization();
