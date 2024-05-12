@@ -27,6 +27,25 @@ namespace Infrastructure.Repositories
             }
         }
 
+        public async Task<bool> DeleteSportEvent(int id)
+        {
+            try
+            {
+                var entity = await _context.SportEvents.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+                if(entity != null)
+                {
+                    _context.SportEvents.Remove(entity);
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public async Task<IEnumerable<SportEventEntity>> GetAllSportEvents()
         {
             var result = await _context.SportEvents.AsNoTracking().Include(x=>x.Object).ToListAsync();
@@ -35,8 +54,22 @@ namespace Infrastructure.Repositories
 
         public async Task<SportEventEntity> GetSportEventById(int id)
         {
-            var result = await _context.SportEvents.FirstOrDefaultAsync(x=>x.Id == id);
+            var result = await _context.SportEvents.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id);
             return result;
+        }
+
+        public async Task<bool> UpdateSportEvent(int id, SportEventEntity entity)
+        {
+            try
+            {
+                _context.Update(entity);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch(Exception ex)
+            {
+                return false;
+            }
         }
     }
     public interface ISportEventsRepository
@@ -44,5 +77,7 @@ namespace Infrastructure.Repositories
         Task<IEnumerable<SportEventEntity>> GetAllSportEvents();
         Task<SportEventEntity> GetSportEventById(int id);
         Task<bool> CreateSportEvent(SportEventEntity entity);
+        Task<bool> UpdateSportEvent(int id, SportEventEntity entity);
+        Task<bool> DeleteSportEvent(int id);
     }
 }

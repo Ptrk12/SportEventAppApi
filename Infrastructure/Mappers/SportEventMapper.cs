@@ -33,7 +33,6 @@ namespace Infrastructure.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                CreatedBy = entity.CreatedBy,
                 Discipline = entity.Discipline,
                 SkillLevel = entity.SkillLevel,
                 Price = entity.Price,

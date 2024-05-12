@@ -19,6 +19,7 @@ namespace SportEventAppApi
             //services repo
             builder.Services.AddScoped<ISportEventsRepository,SportEventsRepository>();
             builder.Services.AddScoped<IObjectRepository,ObjectRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             //services mang
             builder.Services.AddScoped<ISportEventManager, SportEventManager>();

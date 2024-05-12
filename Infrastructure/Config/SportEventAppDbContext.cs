@@ -3,15 +3,17 @@ using Infrastructure.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 
 namespace SportEventAppApi.Config
 {
     public class SportEventAppDbContext : IdentityDbContext
     {
-        public SportEventAppDbContext(DbContextOptions<SportEventAppDbContext> options) : base(options)
+        private readonly IConfiguration _configuration;
+        public SportEventAppDbContext(DbContextOptions<SportEventAppDbContext> options, IConfiguration configuration) : base(options)
         {
-            
+            _configuration = configuration;
         }
         public DbSet<ObjectEntity> Objects { get; set; }
         public DbSet<SportEventEntity> SportEvents { get; set; }
@@ -22,7 +24,7 @@ namespace SportEventAppApi.Config
             base.OnConfiguring(optionsBuilder);
 
             optionsBuilder.UseSqlServer(
-                "Server=DESKTOP-BORRVIJ;Database=SportEventApp;Trusted_Connection=True;TrustServerCertificate=True;");
+                _configuration.GetConnectionString("SqlConnectionString"));
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -241,7 +243,7 @@ namespace SportEventAppApi.Config
                     AmountOfPlayers = 12,
                     Time = 60,
                     DateWhen = DateTime.Now,
-                    CreatedBy = "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612",
+                    CreatedBy = "myuser@email.com",
                     Discipline = Disciplines.Football.ToString(),
                     SkillLevel = SkillLevel.Amateur.ToString(),
                     ObjectId = 14
@@ -256,7 +258,7 @@ namespace SportEventAppApi.Config
                     AmountOfPlayers = 6,
                     Time = 30,
                     DateWhen = DateTime.Now,
-                    CreatedBy = "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612",
+                    CreatedBy = "myuser@email.com",
                     Discipline = Disciplines.Football.ToString(),
                     SkillLevel = SkillLevel.Amateur.ToString(),
                     ObjectId = 4
@@ -271,7 +273,7 @@ namespace SportEventAppApi.Config
                     AmountOfPlayers = 10,
                     Time = 120,
                     DateWhen = DateTime.Now,
-                    CreatedBy = "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612",
+                    CreatedBy = "myuser@email.com",
                     Discipline = Disciplines.Football.ToString(),
                     SkillLevel = SkillLevel.Amateur.ToString(),
                     ObjectId = 12

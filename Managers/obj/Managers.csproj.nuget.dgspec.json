@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\Managers\\Managers.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\SportEventApi\\Managers\\Managers.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj": {
+    "C:\\Users\\Admin\\Desktop\\SportEventApi\\ApplicationCore\\ApplicationCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\SportEventApi\\ApplicationCore\\ApplicationCore.csproj",
         "projectName": "ApplicationCore",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventApi\\ApplicationCore\\ApplicationCore.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\SportEventApi\\ApplicationCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -80,14 +80,14 @@
         }
       }
     },
-    "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\Infrastructure\\Infrastructure.csproj": {
+    "C:\\Users\\Admin\\Desktop\\SportEventApi\\Infrastructure\\Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\Infrastructure\\Infrastructure.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\SportEventApi\\Infrastructure\\Infrastructure.csproj",
         "projectName": "Infrastructure",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\Infrastructure\\Infrastructure.csproj",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventApi\\Infrastructure\\Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\Infrastructure\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\SportEventApi\\Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -104,8 +104,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj": {
-                "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj"
+              "C:\\Users\\Admin\\Desktop\\SportEventApi\\ApplicationCore\\ApplicationCore.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventApi\\ApplicationCore\\ApplicationCore.csproj"
               }
             }
           }
@@ -128,6 +128,10 @@
             "Microsoft.AspNet.Identity.EntityFramework": {
               "target": "Package",
               "version": "[2.2.4, )"
+            },
+            "Microsoft.AspNetCore.Http.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, )"
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
@@ -174,14 +178,14 @@
         }
       }
     },
-    "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\Managers\\Managers.csproj": {
+    "C:\\Users\\Admin\\Desktop\\SportEventApi\\Managers\\Managers.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\Managers\\Managers.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\SportEventApi\\Managers\\Managers.csproj",
         "projectName": "Managers",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\Managers\\Managers.csproj",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventApi\\Managers\\Managers.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\Managers\\obj\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\SportEventApi\\Managers\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -198,11 +202,11 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj": {
-                "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj"
+              "C:\\Users\\Admin\\Desktop\\SportEventApi\\ApplicationCore\\ApplicationCore.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventApi\\ApplicationCore\\ApplicationCore.csproj"
               },
-              "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\Infrastructure\\Infrastructure.csproj": {
-                "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\Infrastructure\\Infrastructure.csproj"
+              "C:\\Users\\Admin\\Desktop\\SportEventApi\\Infrastructure\\Infrastructure.csproj": {
+                "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventApi\\Infrastructure\\Infrastructure.csproj"
               }
             }
           }

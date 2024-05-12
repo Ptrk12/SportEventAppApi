@@ -14,7 +14,7 @@ namespace ApplicationCore.Models
         public int AmountOfPlayers { get; set; }
         public int Time { get; set; }
         public DateTime DateWhen { get; set; }
-        public string ObjectName { get; set; }
-        public string ObjectCity { get; set; }
+        public string? ObjectName { get; set; }
+        public string? ObjectCity { get; set; }
     }
 }
