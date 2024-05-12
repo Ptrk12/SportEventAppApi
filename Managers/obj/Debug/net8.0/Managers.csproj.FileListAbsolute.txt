@@ -32,3 +32,9 @@ C:\Users\Admin\Desktop\SportEventAppApi\Managers\obj\Debug\net8.0\refint\Manager
 C:\Users\Admin\Desktop\SportEventAppApi\Managers\obj\Debug\net8.0\Managers.pdb
 C:\Users\Admin\Desktop\SportEventAppApi\Managers\obj\Debug\net8.0\Managers.genruntimeconfig.cache
 C:\Users\Admin\Desktop\SportEventAppApi\Managers\obj\Debug\net8.0\ref\Managers.dll
+C:\Users\Admin\Desktop\SportEventApi\Managers\bin\Debug\net8.0\ApplicationCore.dll
+C:\Users\Admin\Desktop\SportEventApi\Managers\bin\Debug\net8.0\Infrastructure.dll
+C:\Users\Admin\Desktop\SportEventApi\Managers\bin\Debug\net8.0\ApplicationCore.pdb
+C:\Users\Admin\Desktop\SportEventApi\Managers\bin\Debug\net8.0\Infrastructure.pdb
+C:\Users\Admin\Desktop\SportEventApi\Managers\obj\Debug\net8.0\Managers.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\SportEventApi\Managers\obj\Debug\net8.0\Managers.csproj.Up2Date
