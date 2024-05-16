@@ -13,6 +13,9 @@ C:\Users\Admin\Desktop\SportEventApi\Infrastructure\obj\Debug\net8.0\refint\Infr
 C:\Users\Admin\Desktop\SportEventApi\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
 C:\Users\Admin\Desktop\SportEventApi\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
 C:\Users\Admin\Desktop\SportEventApi\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
+C:\Users\Admin\Desktop\SportEventApi\Infrastructure\bin\Debug\net8.0\ApplicationCore.dll
+C:\Users\Admin\Desktop\SportEventApi\Infrastructure\bin\Debug\net8.0\ApplicationCore.pdb
+C:\Users\Admin\Desktop\SportEventApi\Infrastructure\obj\Debug\net8.0\Infrastr.15EFFBFE.Up2Date
 C:\Users\Admin\Desktop\SportEventAppApi\Infrastructure\bin\Debug\net8.0\Infrastructure.deps.json
 C:\Users\Admin\Desktop\SportEventAppApi\Infrastructure\bin\Debug\net8.0\Infrastructure.runtimeconfig.json
 C:\Users\Admin\Desktop\SportEventAppApi\Infrastructure\bin\Debug\net8.0\Infrastructure.dll
@@ -31,6 +34,3 @@ C:\Users\Admin\Desktop\SportEventAppApi\Infrastructure\obj\Debug\net8.0\refint\I
 C:\Users\Admin\Desktop\SportEventAppApi\Infrastructure\obj\Debug\net8.0\Infrastructure.pdb
 C:\Users\Admin\Desktop\SportEventAppApi\Infrastructure\obj\Debug\net8.0\Infrastructure.genruntimeconfig.cache
 C:\Users\Admin\Desktop\SportEventAppApi\Infrastructure\obj\Debug\net8.0\ref\Infrastructure.dll
-C:\Users\Admin\Desktop\SportEventApi\Infrastructure\bin\Debug\net8.0\ApplicationCore.dll
-C:\Users\Admin\Desktop\SportEventApi\Infrastructure\bin\Debug\net8.0\ApplicationCore.pdb
-C:\Users\Admin\Desktop\SportEventApi\Infrastructure\obj\Debug\net8.0\Infrastr.15EFFBFE.Up2Date

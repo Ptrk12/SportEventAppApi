@@ -52,6 +52,12 @@ namespace Infrastructure.Repositories
             return result;
         }
 
+        public async Task<IEnumerable<SportEventEntity>> GetAllSportEventsInObject(int objectId)
+        {
+            var result = await _context.SportEvents.AsNoTracking().Where(x=>x.ObjectId == objectId).Include(x => x.Object).ToListAsync();
+            return result;
+        }
+
         public async Task<SportEventEntity> GetSportEventById(int id)
         {
             var result = await _context.SportEvents.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id);
@@ -79,5 +85,6 @@ namespace Infrastructure.Repositories
         Task<bool> CreateSportEvent(SportEventEntity entity);
         Task<bool> UpdateSportEvent(int id, SportEventEntity entity);
         Task<bool> DeleteSportEvent(int id);
+        Task<IEnumerable<SportEventEntity>> GetAllSportEventsInObject(int objectId);
     }
 }

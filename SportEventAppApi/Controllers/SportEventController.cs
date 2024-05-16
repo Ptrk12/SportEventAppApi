@@ -31,6 +31,7 @@ namespace SportEventAppApi.Controllers
             var result = await _sportEventManager.CreateSportEvent(req);
             return result == true ? StatusCode(201) : Conflict();
         }
+
         [HttpPut]
         [Route("{id}")]
         [Authorize]

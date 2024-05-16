@@ -23,6 +23,7 @@ namespace SportEventAppApi
 
             //services mang
             builder.Services.AddScoped<ISportEventManager, SportEventManager>();
+            builder.Services.AddScoped<IObjectManager, ObjectManager>();
 
             //sql con
             builder.Services.AddDbContext<SportEventAppDbContext>();
