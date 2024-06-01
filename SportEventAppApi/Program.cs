@@ -1,8 +1,9 @@
+using ApplicationCore.Exceptions;
 using Infrastructure.Repositories;
 using Managers.managers;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using SportEventAppApi.Config;
+using SportEventAppApi.DIConfig;
 
 namespace SportEventAppApi
 {
@@ -12,26 +13,7 @@ namespace SportEventAppApi
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();
-            builder.Services.AddEndpointsApiExplorer();
-            builder.Services.AddSwaggerGen();
-
-            //services repo
-            builder.Services.AddScoped<ISportEventsRepository,SportEventsRepository>();
-            builder.Services.AddScoped<IObjectRepository,ObjectRepository>();
-            builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-            //services mang
-            builder.Services.AddScoped<ISportEventManager, SportEventManager>();
-            builder.Services.AddScoped<IObjectManager, ObjectManager>();
-
-            //sql con
-            builder.Services.AddDbContext<SportEventAppDbContext>();
-
-            //identity
-            builder.Services.AddAuthorization();
-            builder.Services.AddIdentityApiEndpoints<IdentityUser>()
-                .AddEntityFrameworkStores<SportEventAppDbContext>();
+            builder.RegisterDi();
 
             var app = builder.Build();
 
@@ -43,6 +25,9 @@ namespace SportEventAppApi
             }
             //identity
             app.MapIdentityApi<IdentityUser>();
+
+            //exception handler
+            app.UseExceptionHandler(_ => { });
 
             app.UseHttpsRedirection();
 

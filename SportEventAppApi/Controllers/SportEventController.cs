@@ -17,7 +17,7 @@ namespace SportEventAppApi.Controllers
         }
 
         [HttpGet]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> GetAllSportEvents()
         {
             var result = await _sportEventManager.GetAllSportEvents();
@@ -25,7 +25,7 @@ namespace SportEventAppApi.Controllers
         }
 
         [HttpPost]
-        [Authorize]
+       // [Authorize]
         public async Task<IActionResult> CreateSportEvent(SportEvent req)
         {
             var result = await _sportEventManager.CreateSportEvent(req);
@@ -34,7 +34,7 @@ namespace SportEventAppApi.Controllers
 
         [HttpPut]
         [Route("{id}")]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> UpdateSportEvent(SportEvent req, int id)
         {
             var result = await _sportEventManager.UpdateSportEvent(req,id);
@@ -43,7 +43,7 @@ namespace SportEventAppApi.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize]
+       // [Authorize]
         public async Task<IActionResult> DeleteSportEvent(int id)
         {
             var result = await _sportEventManager.DeleteSportEvent(id);
