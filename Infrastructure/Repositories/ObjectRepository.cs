@@ -55,7 +55,7 @@ namespace Infrastructure.Repositories
 
         public async Task<ObjectEntity> GetObjectById(int id)
         {
-            var result = await _context.Objects.AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+            var result = await _context.Objects.FirstOrDefaultAsync(x => x.Id == id);
             return result;
         }
 
@@ -63,7 +63,8 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                _context.Update(entity);
+                _context.ChangeTracker.Clear();
+                _context.Entry(entity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
                 return true;
             }

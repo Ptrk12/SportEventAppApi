@@ -60,7 +60,7 @@ namespace Infrastructure.Repositories
 
         public async Task<SportEventEntity> GetSportEventById(int id)
         {
-            var result = await _context.SportEvents.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id);
+            var result = await _context.SportEvents.FirstOrDefaultAsync(x=>x.Id == id);
             return result;
         }
 
@@ -68,7 +68,8 @@ namespace Infrastructure.Repositories
         {
             try
             {
-                _context.Update(entity);
+                _context.ChangeTracker.Clear();
+                _context.Entry(entity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
                 return true;
             }
