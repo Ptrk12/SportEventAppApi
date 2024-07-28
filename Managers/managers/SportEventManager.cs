@@ -2,6 +2,8 @@
 using Infrastructure.Entities;
 using Infrastructure.Mappers;
 using Infrastructure.Repositories;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace Managers.managers
 {
@@ -30,7 +32,22 @@ namespace Managers.managers
             {
                 var sportEventDb = SportEventMapper.FromSportEventToEntity(sportEvent, objectDb);
                 sportEventDb.CreatedBy = createdBy;
-                result = await _sportEventsRepository.CreateSportEvent(sportEventDb);
+                var executeInfo = await _sportEventsRepository.CreateSportEvent(sportEventDb);
+
+                if (executeInfo.Result)
+                {
+                    JsonArray assignersArray = new JsonArray(createdBy);
+                    var assignersArrayJson = JsonSerializer.Serialize(assignersArray);
+
+                    EventAssignersEntity assigners = new EventAssignersEntity()
+                    {
+                        EventId = executeInfo.resultEntity.Id,
+                        SportEvent = executeInfo.resultEntity,
+                        AssignedPeople = assignersArrayJson
+                    };
+
+                    result = await _sportEventsRepository.CreateAssignedPeopleRecord(assigners);
+                }
             }
             return result;
         }
@@ -43,6 +60,7 @@ namespace Managers.managers
             foreach(var item in dataDb)
             {
                 var sportEvent = SportEventMapper.FromEntityToSportEvent(item);
+                sportEvent.PeopleAssigned = await _sportEventsRepository.GetAssignedPeopleToEventCount(item.Id);
                 result.Add(sportEvent);
             }
             return result;
@@ -109,9 +127,43 @@ namespace Managers.managers
             result = await _sportEventsRepository.DeleteSportEvent(id);
             return result;
         }
+
+        public async Task<bool> AssignOrRemoveFromEvent(int sportEventId, string operationType)
+        {
+            var result = false;
+            var currentAssigners = await _sportEventsRepository.GetAssignersInEvent(sportEventId);
+
+            if (!string.IsNullOrEmpty(currentAssigners))
+            {
+                var currentAssignersArrayDb = JsonSerializer.Deserialize<List<string>>(currentAssigners);
+                var currentAssignersArray = JsonSerializer.Deserialize<List<string>>(currentAssigners);
+
+                var currentUserEmail = _userRepository.GetUserEmailFromToken();
+
+                if (!string.IsNullOrEmpty(currentUserEmail))
+                {
+                    if (!currentAssignersArray.Contains(currentUserEmail) && operationType == "add")
+                    {
+                        currentAssignersArray.Add(currentUserEmail);
+                    }
+                    else if (currentAssignersArray.Contains(currentUserEmail) && operationType == "remove")
+                    {
+                        currentAssignersArray.Remove(currentUserEmail);
+                    }
+                    if(currentAssignersArray.Count != currentAssignersArrayDb.Count)
+                    {
+                        var currentAssignersJsonArray = JsonSerializer.Serialize(currentAssignersArray);
+                        result = await _sportEventsRepository.AssignOrRemoveFromEvent(sportEventId, currentAssignersJsonArray);
+                    }
+                }
+            }
+
+            return result;
+        }
     }
     public interface ISportEventManager
     {
+        Task<bool> AssignOrRemoveFromEvent(int sportEventId, string operationType);
         Task<IEnumerable<SportEvent>> GetAllSportEvents();
         Task<SportEvent> GetSportEventById(int id);
         Task<bool> CreateSportEvent(SportEvent sportEvent);

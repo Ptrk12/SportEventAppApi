@@ -1,8 +1,4 @@
-using ApplicationCore.Exceptions;
-using Infrastructure.Repositories;
-using Managers.managers;
 using Microsoft.AspNetCore.Identity;
-using SportEventAppApi.Config;
 using SportEventAppApi.DIConfig;
 
 namespace SportEventAppApi

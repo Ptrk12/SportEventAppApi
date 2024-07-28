@@ -49,5 +49,13 @@ namespace SportEventAppApi.Controllers
             var result = await _sportEventManager.DeleteSportEvent(id);
             return result == true ? StatusCode(201) : Conflict();
         }
+
+        [HttpPut]
+        [Route("/assign-or-remove-from-event/{id}")]
+        public async Task<IActionResult> AssignOrRemoveFromEvent(int id, string operationType)
+        {
+            var result = await _sportEventManager.AssignOrRemoveFromEvent(id,operationType);
+            return result == true ? NoContent() : Conflict();
+        }
     }
 }

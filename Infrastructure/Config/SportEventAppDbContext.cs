@@ -18,6 +18,7 @@ namespace SportEventAppApi.Config
         public DbSet<ObjectEntity> Objects { get; set; }
         public DbSet<SportEventEntity> SportEvents { get; set; }
         public DbSet<TopObjectsEntity> TopObjects { get; set; }
+        public DbSet<EventAssignersEntity> EventAssigners { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,6 +39,9 @@ namespace SportEventAppApi.Config
             modelBuilder.Entity<ObjectEntity>()
                 .HasMany(x => x.SportEvents)
                 .WithOne(x => x.Object);
+
+            modelBuilder.Entity<EventAssignersEntity>()
+                .HasOne(x => x.SportEvent);
 
             modelBuilder.Entity<TopObjectsEntity>()
                 .HasOne(x => x.Object);
@@ -246,7 +250,8 @@ namespace SportEventAppApi.Config
                     CreatedBy = "myuser@email.com",
                     Discipline = Disciplines.Football.ToString(),
                     SkillLevel = SkillLevel.Amateur.ToString(),
-                    ObjectId = 14
+                    ObjectId = 14,
+                    IsMultiSportCard = true
                 });
             modelBuilder.Entity<SportEventEntity>().HasData(
                 new SportEventEntity()
@@ -261,7 +266,8 @@ namespace SportEventAppApi.Config
                     CreatedBy = "myuser@email.com",
                     Discipline = Disciplines.Football.ToString(),
                     SkillLevel = SkillLevel.Amateur.ToString(),
-                    ObjectId = 4
+                    ObjectId = 4,
+                    IsMultiSportCard = true
                 });
             modelBuilder.Entity<SportEventEntity>().HasData(
                 new SportEventEntity()
@@ -276,7 +282,8 @@ namespace SportEventAppApi.Config
                     CreatedBy = "myuser@email.com",
                     Discipline = Disciplines.Football.ToString(),
                     SkillLevel = SkillLevel.Amateur.ToString(),
-                    ObjectId = 12
+                    ObjectId = 12,
+                    IsMultiSportCard = false
                 });
 
             modelBuilder.Entity<TopObjectsEntity>().HasData(

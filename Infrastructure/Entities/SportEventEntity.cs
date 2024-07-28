@@ -17,5 +17,6 @@ namespace Infrastructure.Entities
         public int Time { get; set; }
         public DateTime DateWhen { get; set; }
         public ObjectEntity Object { get; set; }
+        public bool IsMultiSportCard { get; set; }
     }
 }

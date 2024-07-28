@@ -25,7 +25,8 @@ namespace Infrastructure.Mappers
                 Time = entity.Time,
                 DateWhen = entity.DateWhen,
                 ObjectName = entity.Object.Name,
-                ObjectCity = entity.Object.City
+                ObjectCity = entity.Object.City,
+                IsMultisportCard = entity.IsMultiSportCard
             };
             return result;
         }
@@ -44,7 +45,8 @@ namespace Infrastructure.Mappers
                 Time = entity.Time,
                 DateWhen = entity.DateWhen,
                 Object = objectEntity,
-                ObjectId = objectEntity.Id              
+                ObjectId = objectEntity.Id,
+                IsMultiSportCard = entity.IsMultisportCard
             };
             return result;
         }
