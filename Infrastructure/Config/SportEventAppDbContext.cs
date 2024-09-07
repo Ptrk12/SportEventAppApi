@@ -37,6 +37,30 @@ namespace SportEventAppApi.Config
             modelBuilder.Entity<SportEventEntity>().Property(p => p.Price).HasColumnType("decimal(18,4)");
 
             modelBuilder.Entity<ObjectEntity>()
+                .Property(e => e.ObjectType)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (ObjectTypes)Enum.Parse(typeof(ObjectTypes), v));
+
+            modelBuilder.Entity<ObjectEntity>()
+                .Property(e => e.City)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (Cities)Enum.Parse(typeof(Cities), v));
+
+            modelBuilder.Entity<SportEventEntity>()
+                .Property(e => e.Discipline)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (Disciplines)Enum.Parse(typeof(Disciplines), v));
+
+            modelBuilder.Entity<SportEventEntity>()
+                .Property(e => e.SkillLevel)
+                .HasConversion(
+                    v => v.ToString(),
+                    v => (SkillLevel)Enum.Parse(typeof(SkillLevel), v));
+
+            modelBuilder.Entity<ObjectEntity>()
                 .HasMany(x => x.SportEvents)
                 .WithOne(x => x.Object);
 
@@ -103,8 +127,8 @@ namespace SportEventAppApi.Config
                     Name = "Com-Com Zone",
                     Description = "",
                     Adress = "Tadeusza Ptaszyckiego 6, 31-979 Kraków",
-                    City = Cities.Krakow.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Krakow,
+                    ObjectType = ObjectTypes.Hall
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -113,8 +137,8 @@ namespace SportEventAppApi.Config
                     Name = "III Ogród Jordanowski",
                     Description = "",
                     Adress = "Wawelska 3, 02-034 Warszawa",
-                    City = Cities.Warszawa.ToString(),
-                    ObjectType = ObjectTypes.Sports_field.ToString()
+                    City = Cities.Warszawa,
+                    ObjectType = ObjectTypes.Sports_field
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -123,8 +147,8 @@ namespace SportEventAppApi.Config
                     Name = "Ośrodek Sportu i Rekreacji Dzielnicy Ochota",
                     Description = "",
                     Adress = "Nowowiejska 37B, 02-079 Warszawa",
-                    City = Cities.Warszawa.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Warszawa,
+                    ObjectType = ObjectTypes.Hall
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -133,8 +157,8 @@ namespace SportEventAppApi.Config
                     Name = "OSiR Praga-Południe: Hala Sportowa Siennicka",
                     Description = "",
                     Adress = "Siennicka 40B, 04-393 Warszawa",
-                    City = Cities.Warszawa.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Warszawa,
+                    ObjectType = ObjectTypes.Hall
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -143,8 +167,8 @@ namespace SportEventAppApi.Config
                     Name = "OSiR Targówek Hala Sportowa",
                     Description = "",
                     Adress = "Michała Ossowskiego 25, 03-542 Warszawa",
-                    City = Cities.Warszawa.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Warszawa,
+                    ObjectType = ObjectTypes.Hall
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -153,8 +177,8 @@ namespace SportEventAppApi.Config
                     Name = "Hala Sportowa, Uniwersytet Rolniczy w Krakowie",
                     Description = "",
                     Adress = "al. 29 Listopada 58, 31-425 Kraków",
-                    City = Cities.Krakow.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Krakow,
+                    ObjectType = ObjectTypes.Hall
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -163,8 +187,8 @@ namespace SportEventAppApi.Config
                     Name = "Centrum Sportu i Rekreacji Politechniki Krakowskiej",
                     Description = "",
                     Adress = "Kamienna 17, 30-001 Kraków",
-                    City = Cities.Krakow.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Krakow,
+                    ObjectType = ObjectTypes.Hall
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -173,8 +197,8 @@ namespace SportEventAppApi.Config
                     Name = "Hala sportowa przy IX LO",
                     Description = "",
                     Adress = "Kazimierza Czapińskiego 5, 30-048 Kraków",
-                    City = Cities.Krakow.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Krakow,
+                    ObjectType = ObjectTypes.Hall
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -183,8 +207,8 @@ namespace SportEventAppApi.Config
                     Name = "Hala Sportowa Orzeł Piaski Wielkie",
                     Description = "",
                     Adress = "Niebieska 15, 30-685 Kraków",
-                    City = Cities.Krakow.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Krakow,
+                    ObjectType = ObjectTypes.Hall
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -193,8 +217,8 @@ namespace SportEventAppApi.Config
                     Name = "Hala 100-lecia KS Cracovia wraz z Centrum Sportu Niepełnosprawnych",
                     Description = "",
                     Adress = "Aleja Marszałka Ferdynanda Focha 40, 30-119 Kraków",
-                    City = Cities.Krakow.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Krakow,
+                    ObjectType = ObjectTypes.Hall
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -203,8 +227,8 @@ namespace SportEventAppApi.Config
                     Name = "KKT Wrocław Stowarzyszenie Krzycki Klub Tenisowy",
                     Description = "",
                     Adress = "ul. Pułtuska 13, 53-116 Wrocław",
-                    City = Cities.Wroclaw.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Wroclaw,
+                    ObjectType = ObjectTypes.Hall
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -213,8 +237,8 @@ namespace SportEventAppApi.Config
                     Name = "Hala tenisowa i korty tenisowe AWF",
                     Description = "",
                     Adress = "ul. Paderewskiego 35",
-                    City = Cities.Wroclaw.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Wroclaw,
+                    ObjectType = ObjectTypes.Hall
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -223,8 +247,8 @@ namespace SportEventAppApi.Config
                     Name = "Centrum sportowe Hasta La Vista",
                     Description = "",
                     Adress = "ul. Góralska 5",
-                    City = Cities.Wroclaw.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Wroclaw,
+                    ObjectType = ObjectTypes.Hall
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -233,8 +257,8 @@ namespace SportEventAppApi.Config
                     Name = "Centrum sportu i rekreacji Sportwerk",
                     Description = "",
                     Adress = "ul. Kozanowska 69",
-                    City = Cities.Wroclaw.ToString(),
-                    ObjectType = ObjectTypes.Hall.ToString()
+                    City = Cities.Wroclaw,
+                    ObjectType = ObjectTypes.Hall
                 });
 
             modelBuilder.Entity<SportEventEntity>().HasData(
@@ -248,8 +272,8 @@ namespace SportEventAppApi.Config
                     Time = 60,
                     DateWhen = DateTime.Now,
                     CreatedBy = "myuser@email.com",
-                    Discipline = Disciplines.Football.ToString(),
-                    SkillLevel = SkillLevel.Amateur.ToString(),
+                    Discipline = Disciplines.Football,
+                    SkillLevel = SkillLevel.Amateur,
                     ObjectId = 14,
                     IsMultiSportCard = true
                 });
@@ -264,8 +288,8 @@ namespace SportEventAppApi.Config
                     Time = 30,
                     DateWhen = DateTime.Now,
                     CreatedBy = "myuser@email.com",
-                    Discipline = Disciplines.Football.ToString(),
-                    SkillLevel = SkillLevel.Amateur.ToString(),
+                    Discipline = Disciplines.Football,
+                    SkillLevel = SkillLevel.Amateur,
                     ObjectId = 4,
                     IsMultiSportCard = true
                 });
@@ -280,8 +304,8 @@ namespace SportEventAppApi.Config
                     Time = 120,
                     DateWhen = DateTime.Now,
                     CreatedBy = "myuser@email.com",
-                    Discipline = Disciplines.Football.ToString(),
-                    SkillLevel = SkillLevel.Amateur.ToString(),
+                    Discipline = Disciplines.Football,
+                    SkillLevel = SkillLevel.Amateur,
                     ObjectId = 12,
                     IsMultiSportCard = false
                 });

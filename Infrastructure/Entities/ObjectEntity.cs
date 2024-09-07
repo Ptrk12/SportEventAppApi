@@ -1,4 +1,6 @@
 ﻿using Infrastructure.Enums;
+using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
 
 namespace Infrastructure.Entities
 {
@@ -8,8 +10,8 @@ namespace Infrastructure.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string Adress { get;set; }
-        public string City { get;set; }
-        public string ObjectType { get;set; }
+        public Cities City { get;set; }
+        public ObjectTypes ObjectType { get;set; }
         public List<SportEventEntity> SportEvents { get; set; } = new List<SportEventEntity>();
     }
 }

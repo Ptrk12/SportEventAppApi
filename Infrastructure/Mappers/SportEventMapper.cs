@@ -8,17 +8,14 @@ namespace Infrastructure.Mappers
     {
         public static SportEvent FromEntityToSportEvent(SportEventEntity entity)
         {
-            Enum.TryParse(entity.Discipline, out Disciplines discipline);
-            Enum.TryParse(entity.SkillLevel, out SkillLevel skillLevel);
-
             var result = new SportEvent()
             {
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
                 CreatedBy = entity.CreatedBy,
-                Discipline = discipline,
-                SkillLevel = skillLevel,
+                Discipline = entity.Discipline,
+                SkillLevel = entity.SkillLevel,
                 Price = entity.Price,
                 ObjectId = entity.ObjectId,
                 AmountOfPlayers = entity.AmountOfPlayers,
@@ -38,8 +35,8 @@ namespace Infrastructure.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                Discipline = entity.Discipline.ToString(),
-                SkillLevel = entity.SkillLevel.ToString(),
+                Discipline = entity.Discipline,
+                SkillLevel = entity.SkillLevel,
                 Price = entity.Price,
                 AmountOfPlayers = entity.AmountOfPlayers,
                 Time = entity.Time,
@@ -58,8 +55,8 @@ namespace Infrastructure.Mappers
                 Id = entity.Id,
                 Name = entity.Name,
                 Description = entity.Description,
-                Discipline = entity.Discipline.ToString(),
-                SkillLevel = entity.SkillLevel.ToString(),
+                Discipline = entity.Discipline,
+                SkillLevel = entity.SkillLevel,
                 Price = entity.Price,
                 AmountOfPlayers = entity.AmountOfPlayers,
                 Time = entity.Time,

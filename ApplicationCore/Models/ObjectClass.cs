@@ -8,17 +8,17 @@ namespace ApplicationCore.Models
     {
         public int Id { get; set; }
         [Required]
-        [StringLength(100)]
+        [MinLength(1, ErrorMessage = "Name should have at least one letter length")]
         public string Name { get; set; }
-        [Required]
-        [StringLength(100)]
         public string Description { get; set; }
         [Required]
-        [StringLength(250)]
+        [MinLength(3, ErrorMessage = "Address should have at least three letter length")]
         public string Adress { get; set; }
         [Required]
+        [EnumDataType(typeof(Cities))]
         public Cities City { get; set; }
         [Required]
+        [EnumDataType(typeof(ObjectTypes))]
         public ObjectTypes ObjectType { get; set; }
     }
 }
