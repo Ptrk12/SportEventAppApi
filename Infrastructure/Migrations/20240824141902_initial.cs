@@ -190,7 +190,8 @@ namespace Infrastructure.Migrations
                     Price = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     AmountOfPlayers = table.Column<int>(type: "int", nullable: false),
                     Time = table.Column<int>(type: "int", nullable: false),
-                    DateWhen = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    DateWhen = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    IsMultiSportCard = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -223,6 +224,27 @@ namespace Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "EventAssigners",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    EventId = table.Column<int>(type: "int", nullable: false),
+                    SportEventId = table.Column<int>(type: "int", nullable: false),
+                    AssignedPeople = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_EventAssigners", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_EventAssigners_SportEvents_SportEventId",
+                        column: x => x.SportEventId,
+                        principalTable: "SportEvents",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -237,8 +259,8 @@ namespace Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", 0, "2cf05497-8192-4932-8b7e-ac149a956a4d", "myuser@email.com", false, false, null, "MYUSER@EMAIL.COM", "MYUSER@EMAIL.COM", "AQAAAAIAAYagAAAAEOXPVN5BFfxAhgG3Ch2va7V3rm3YhaiJ1uUgOjazAMtGFSOosp3L9QTlZUzOKt5QuQ==", null, false, "bc600970-5560-415d-9f6c-475ed22248a7", false, "myuser@email.com" },
-                    { "d3e7c295-d723-4d8e-8c39-be6107f44020", 0, "f6b0325c-60b2-417d-8d56-0955fd210d3e", "admin@email.com", false, false, null, "ADMIN@EMAIL.COM", "ADMIN@EMAIL.COM", "AQAAAAIAAYagAAAAELZ5tS0qBKfkrrzcWZx9EZXPs2v3t9ePjuld2fQ+q3dLEABZT0jat4LuwFeHZ8iRAA==", null, false, "bfc08c7c-b016-42c6-8f26-03fe6c5a34b3", false, "admin@email.com" }
+                    { "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", 0, "e9eaedfc-38fe-4706-8a0c-c8cee39c7140", "myuser@email.com", false, false, null, "MYUSER@EMAIL.COM", "MYUSER@EMAIL.COM", "AQAAAAIAAYagAAAAEMKUrLwZCM/MuipTcurt3pelfQ52HPO7asCtnuYOOa7f5ib5cHtlpcEGt8cZjy2fEg==", null, false, "8f5c1c41-d202-43a2-8e49-f16009e2dff8", false, "myuser@email.com" },
+                    { "d3e7c295-d723-4d8e-8c39-be6107f44020", 0, "1022e327-5cf7-493b-9747-2b7bad9ac67e", "admin@email.com", false, false, null, "ADMIN@EMAIL.COM", "ADMIN@EMAIL.COM", "AQAAAAIAAYagAAAAEJsH5Eq2gn6erek1DTsAEQ4py9jGK+zXzsWFH9/LH0U78RibYGKmF8W8y2qdVej7sA==", null, false, "9d29e828-4c8c-42c7-aaf1-af56f88f4537", false, "admin@email.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -273,12 +295,12 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "SportEvents",
-                columns: new[] { "Id", "AmountOfPlayers", "CreatedBy", "DateWhen", "Description", "Discipline", "Name", "ObjectId", "Price", "SkillLevel", "Time" },
+                columns: new[] { "Id", "AmountOfPlayers", "CreatedBy", "DateWhen", "Description", "Discipline", "IsMultiSportCard", "Name", "ObjectId", "Price", "SkillLevel", "Time" },
                 values: new object[,]
                 {
-                    { 1, 12, "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", new DateTime(2024, 5, 8, 18, 32, 3, 701, DateTimeKind.Local).AddTicks(9698), "Desc 1", "Football", "", 14, 20.0m, "Amateur", 60 },
-                    { 2, 6, "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", new DateTime(2024, 5, 8, 18, 32, 3, 701, DateTimeKind.Local).AddTicks(9905), "Desc 2", "Football", "", 4, 22.0m, "Amateur", 30 },
-                    { 3, 10, "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", new DateTime(2024, 5, 8, 18, 32, 3, 701, DateTimeKind.Local).AddTicks(9994), "Desc 3", "Football", "", 12, 23.0m, "Amateur", 120 }
+                    { 1, 12, "myuser@email.com", new DateTime(2024, 8, 24, 16, 19, 1, 241, DateTimeKind.Local).AddTicks(8423), "Desc 1", "Football", true, "", 14, 20.0m, "Amateur", 60 },
+                    { 2, 6, "myuser@email.com", new DateTime(2024, 8, 24, 16, 19, 1, 241, DateTimeKind.Local).AddTicks(8644), "Desc 2", "Football", true, "", 4, 22.0m, "Amateur", 30 },
+                    { 3, 10, "myuser@email.com", new DateTime(2024, 8, 24, 16, 19, 1, 241, DateTimeKind.Local).AddTicks(8665), "Desc 3", "Football", false, "", 12, 23.0m, "Amateur", 120 }
                 });
 
             migrationBuilder.InsertData(
@@ -331,6 +353,11 @@ namespace Infrastructure.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_EventAssigners_SportEventId",
+                table: "EventAssigners",
+                column: "SportEventId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_SportEvents_ObjectId",
                 table: "SportEvents",
                 column: "ObjectId");
@@ -360,7 +387,7 @@ namespace Infrastructure.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "SportEvents");
+                name: "EventAssigners");
 
             migrationBuilder.DropTable(
                 name: "TopObjects");
@@ -370,6 +397,9 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "SportEvents");
 
             migrationBuilder.DropTable(
                 name: "Objects");

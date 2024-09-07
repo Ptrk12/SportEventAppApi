@@ -12,8 +12,8 @@ using SportEventAppApi.Config;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SportEventAppDbContext))]
-    [Migration("20240727124423_IsMultiSportCardColumn")]
-    partial class IsMultiSportCardColumn
+    [Migration("20240824141902_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -269,7 +269,7 @@ namespace Infrastructure.Migrations
                             Id = 1,
                             AmountOfPlayers = 12,
                             CreatedBy = "myuser@email.com",
-                            DateWhen = new DateTime(2024, 7, 27, 14, 44, 21, 460, DateTimeKind.Local).AddTicks(2154),
+                            DateWhen = new DateTime(2024, 8, 24, 16, 19, 1, 241, DateTimeKind.Local).AddTicks(8423),
                             Description = "Desc 1",
                             Discipline = "Football",
                             IsMultiSportCard = true,
@@ -284,7 +284,7 @@ namespace Infrastructure.Migrations
                             Id = 2,
                             AmountOfPlayers = 6,
                             CreatedBy = "myuser@email.com",
-                            DateWhen = new DateTime(2024, 7, 27, 14, 44, 21, 460, DateTimeKind.Local).AddTicks(2274),
+                            DateWhen = new DateTime(2024, 8, 24, 16, 19, 1, 241, DateTimeKind.Local).AddTicks(8644),
                             Description = "Desc 2",
                             Discipline = "Football",
                             IsMultiSportCard = true,
@@ -299,7 +299,7 @@ namespace Infrastructure.Migrations
                             Id = 3,
                             AmountOfPlayers = 10,
                             CreatedBy = "myuser@email.com",
-                            DateWhen = new DateTime(2024, 7, 27, 14, 44, 21, 460, DateTimeKind.Local).AddTicks(2305),
+                            DateWhen = new DateTime(2024, 8, 24, 16, 19, 1, 241, DateTimeKind.Local).AddTicks(8665),
                             Description = "Desc 3",
                             Discipline = "Football",
                             IsMultiSportCard = false,
@@ -487,15 +487,15 @@ namespace Infrastructure.Migrations
                         {
                             Id = "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "79b89943-dd8d-4b8c-963c-31533455f6f5",
+                            ConcurrencyStamp = "e9eaedfc-38fe-4706-8a0c-c8cee39c7140",
                             Email = "myuser@email.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "MYUSER@EMAIL.COM",
                             NormalizedUserName = "MYUSER@EMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEI37W65KDcu1+P/8qrCmte7796UP8aMvHSlfpGsDIHdTNuZObOo/sdREs96SGWVLZA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMKUrLwZCM/MuipTcurt3pelfQ52HPO7asCtnuYOOa7f5ib5cHtlpcEGt8cZjy2fEg==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "9995c0e3-79c3-4b60-a47f-34e3d1153808",
+                            SecurityStamp = "8f5c1c41-d202-43a2-8e49-f16009e2dff8",
                             TwoFactorEnabled = false,
                             UserName = "myuser@email.com"
                         },
@@ -503,15 +503,15 @@ namespace Infrastructure.Migrations
                         {
                             Id = "d3e7c295-d723-4d8e-8c39-be6107f44020",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ff2c1ee3-209f-4227-b517-48b32ef94c09",
+                            ConcurrencyStamp = "1022e327-5cf7-493b-9747-2b7bad9ac67e",
                             Email = "admin@email.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN@EMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEGPaHhxc6wQDvkNytpsvFcYCFiQdtWSXGT8fES8k6thKrSYdV2GSs2zDz6yu5Ryg+Q==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJsH5Eq2gn6erek1DTsAEQ4py9jGK+zXzsWFH9/LH0U78RibYGKmF8W8y2qdVej7sA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "88edd960-1eb2-47d1-a2cd-d8b2723a0ea7",
+                            SecurityStamp = "9d29e828-4c8c-42c7-aaf1-af56f88f4537",
                             TwoFactorEnabled = false,
                             UserName = "admin@email.com"
                         });

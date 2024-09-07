@@ -1,8 +1,6 @@
 ﻿using ApplicationCore.Models;
-using Infrastructure.Entities;
 using Infrastructure.Mappers;
 using Infrastructure.Repositories;
-using System.Linq.Expressions;
 
 namespace Managers.managers
 {
@@ -19,9 +17,10 @@ namespace Managers.managers
             _sportEventsRepository = sportEventsRepository;
         }
 
-        public async Task<bool> CreateObject(ObjectEntity objectEntity)
+        public async Task<bool> CreateObject(ObjectClass req)
         {
-            var result = await _objectRepository.CreateObject(objectEntity);
+            var entity = ObjectMapper.FromClassToEntity(req, null);
+            var result = await _objectRepository.CreateObject(entity);
             return result;
         }
 
@@ -56,7 +55,7 @@ namespace Managers.managers
             return result;
         }
 
-        public async Task<bool> UpdateObject(ObjectEntity objectEntity, int id)
+        public async Task<bool> UpdateObject(ObjectClass objectEntity, int id)
         {
             var result = false;
             var objectDb = await _objectRepository.GetObjectById(id);
@@ -64,9 +63,9 @@ namespace Managers.managers
 
             if (objectDb != null)
             {
-                objectEntity.Id = objectDb.Id;
-                objectEntity.SportEvents = sportEvents.ToList();
-                result = await _objectRepository.Updateobject(id, objectEntity);
+                var req = ObjectMapper.FromClassToEntity(objectEntity, sportEvents.ToList());
+                req.Id = objectDb.Id;
+                result = await _objectRepository.Updateobject(id, req);
             }
             return result;
         }
@@ -75,8 +74,8 @@ namespace Managers.managers
     {
         Task<ObjectClass> GetObjectById(int id);
         Task<IEnumerable<ObjectClass>> GetAllObjects();
-        Task<bool> CreateObject(ObjectEntity objectEntity);
+        Task<bool> CreateObject(ObjectClass req);
         Task<bool> DeleteObject(int id);
-        Task<bool> UpdateObject(ObjectEntity objectClass ,int id);
+        Task<bool> UpdateObject(ObjectClass objectEntity, int id);
     }
 }

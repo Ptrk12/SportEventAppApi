@@ -1,5 +1,4 @@
 ﻿using Infrastructure.Enums;
-using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace Infrastructure.Entities
 {
@@ -9,8 +8,8 @@ namespace Infrastructure.Entities
         public string Name { get; set; }
         public string Description { get; set; }
         public string CreatedBy { get; set; }
-        public string Discipline { get; set; }
-        public string SkillLevel { get; set; }
+        public Disciplines Discipline { get; set; }
+        public SkillLevel SkillLevel { get; set; }
         public int ObjectId { get; set; }   
         public decimal Price { get;set; }
         public int AmountOfPlayers { get; set; }

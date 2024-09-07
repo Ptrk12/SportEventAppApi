@@ -39,14 +39,14 @@ namespace SportEventAppApi.Controllers
         }
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateObject(ObjectEntity req, int id)
+        public async Task<IActionResult> UpdateObject(ObjectClass req, int id)
         {
             var result = await _objectManager.UpdateObject(req,id);
             return result == true ? NoContent() : Conflict();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSportObject(ObjectEntity req)
+        public async Task<IActionResult> CreateSportObject(ObjectClass req)
         {
             var result = await _objectManager.CreateObject(req);
             return result == true ? StatusCode(201) : Conflict();
