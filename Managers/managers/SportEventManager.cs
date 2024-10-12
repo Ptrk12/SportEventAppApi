@@ -64,6 +64,7 @@ namespace Managers.managers
                 result.Add(sportEvent);
             }
             return result;
+            //TO DO: Create lists of tasks
         }
 
         public Task<SportEvent> GetSportEventById(int id)

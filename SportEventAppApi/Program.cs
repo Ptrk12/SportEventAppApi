@@ -19,11 +19,16 @@ namespace SportEventAppApi
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+
+            builder.Services.AddCors();
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
+
             //identity
             app.MapIdentityApi<IdentityUser>();
 
             //exception handler
             app.UseExceptionHandler(_ => { });
+            
 
             app.UseHttpsRedirection();
 
