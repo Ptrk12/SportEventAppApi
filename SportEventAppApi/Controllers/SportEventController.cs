@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Models;
+using ApplicationCore.Models.req;
 using Managers.managers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,7 +27,7 @@ namespace SportEventAppApi.Controllers
 
         [HttpPost]
        // [Authorize]
-        public async Task<IActionResult> CreateSportEvent(SportEvent req)
+        public async Task<IActionResult> CreateSportEvent(CreateSportEventReq req)
         {
             var result = await _sportEventManager.CreateSportEvent(req);
             return result == true ? StatusCode(201) : Conflict();
@@ -35,7 +36,7 @@ namespace SportEventAppApi.Controllers
         [HttpPut]
         [Route("{id}")]
         //[Authorize]
-        public async Task<IActionResult> UpdateSportEvent(SportEvent req, int id)
+        public async Task<IActionResult> UpdateSportEvent(CreateSportEventReq req, int id)
         {
             var result = await _sportEventManager.UpdateSportEvent(req,id);
             return result == true ? StatusCode(201) : Conflict();

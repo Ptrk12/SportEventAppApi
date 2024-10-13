@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Models;
+using ApplicationCore.Models.req;
 using Infrastructure.Entities;
 using Infrastructure.Mappers;
 using Infrastructure.Repositories;
@@ -23,14 +24,14 @@ namespace Managers.managers
             _userRepository = userRepository;
         }
 
-        public async Task<bool> CreateSportEvent(SportEvent sportEvent)
+        public async Task<bool> CreateSportEvent(CreateSportEventReq sportEvent)
         {
             var createdBy = _userRepository.GetUserEmailFromToken();
             var objectDb = await _objectRepository.GetObjectById(sportEvent.ObjectId);
             var result = false;
             if(objectDb != null)
             {
-                var sportEventDb = SportEventMapper.FromSportEventToEntity(sportEvent, objectDb);
+                var sportEventDb = SportEventMapper.FromSportEventToEntityInsertReq(sportEvent, objectDb);
                 sportEventDb.CreatedBy = createdBy;
                 var executeInfo = await _sportEventsRepository.CreateSportEvent(sportEventDb);
 
@@ -88,7 +89,7 @@ namespace Managers.managers
             return false;
         }
 
-        public async Task<bool> UpdateSportEvent(SportEvent sportEvent, int id)
+        public async Task<bool> UpdateSportEvent(CreateSportEventReq sportEvent, int id)
         {
             var result = false;
             var sportEventDb = await _sportEventsRepository.GetSportEventById(id);
@@ -105,7 +106,7 @@ namespace Managers.managers
                     var objectDb = await _objectRepository.GetObjectById(sportEvent.ObjectId);
                     if(objectDb != null)
                     {
-                        var updatedEntity = SportEventMapper.FromSportEventToEntity(sportEvent, objectDb);
+                        var updatedEntity = SportEventMapper.FromSportEventToEntityInsertReq(sportEvent, objectDb);
                         updatedEntity.CreatedBy = sportEventDb.CreatedBy;
                         updatedEntity.Id = sportEventDb.Id;
                         result = await _sportEventsRepository.UpdateSportEvent(id, updatedEntity);
@@ -167,8 +168,8 @@ namespace Managers.managers
         Task<bool> AssignOrRemoveFromEvent(int sportEventId, string operationType);
         Task<IEnumerable<SportEvent>> GetAllSportEvents();
         Task<SportEvent> GetSportEventById(int id);
-        Task<bool> CreateSportEvent(SportEvent sportEvent);
-        Task<bool> UpdateSportEvent(SportEvent sportEvent, int id);
+        Task<bool> CreateSportEvent(CreateSportEventReq sportEvent);
+        Task<bool> UpdateSportEvent(CreateSportEventReq sportEvent, int id);
         Task<bool> DeleteSportEvent(int id);
     }
 }
