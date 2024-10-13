@@ -1,5 +1,6 @@
 ﻿
 using ApplicationCore.Models;
+using ApplicationCore.Models.req;
 using Infrastructure.Entities;
 namespace Infrastructure.Mappers
 {
@@ -18,7 +19,7 @@ namespace Infrastructure.Mappers
             };
         }
 
-        public static ObjectEntity FromClassToEntity(ObjectClass entity, List<SportEventEntity>? sportEvents)
+        public static ObjectEntity FromClassToEntityInsertReq(CreateObjectReq entity, List<SportEventEntity>? sportEvents)
         {
             return new ObjectEntity()
             {

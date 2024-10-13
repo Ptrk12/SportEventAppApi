@@ -1,6 +1,6 @@
 ﻿using ApplicationCore.Models;
+using ApplicationCore.Models.req;
 using Infrastructure.Entities;
-using Infrastructure.Enums;
 
 namespace Infrastructure.Mappers
 {
@@ -11,8 +11,7 @@ namespace Infrastructure.Mappers
             var result = new SportEvent()
             {
                 Id = entity.Id,
-                Name = entity.Name,
-                Description = entity.Description,
+                EventName = entity.Name,
                 CreatedBy = entity.CreatedBy,
                 Discipline = entity.Discipline,
                 SkillLevel = entity.SkillLevel,
@@ -23,7 +22,8 @@ namespace Infrastructure.Mappers
                 DateWhen = entity.DateWhen,
                 ObjectName = entity.Object.Name,
                 ObjectCity = entity.Object.City,
-                IsMultisportCard = entity.IsMultiSportCard
+                IsMultisportCard = entity.IsMultiSportCard,
+                Address = entity.Object.Adress
             };
             return result;
         }
@@ -33,8 +33,7 @@ namespace Infrastructure.Mappers
             var result = new SportEventEntity()
             {
                 Id = entity.Id,
-                Name = entity.Name,
-                Description = entity.Description,
+                Name = entity.EventName,
                 Discipline = entity.Discipline,
                 SkillLevel = entity.SkillLevel,
                 Price = entity.Price,
@@ -48,20 +47,19 @@ namespace Infrastructure.Mappers
             return result;
         }
 
-        public static SportEventEntity FromSportEventToEntityInsertReq(SportEvent entity, ObjectEntity? objectEntity)
+        public static SportEventEntity FromSportEventToEntityInsertReq(CreateSportEventReq entity, ObjectEntity? objectEntity)
         {
             var result = new SportEventEntity()
             {
-                Id = entity.Id,
-                Name = entity.Name,
-                Description = entity.Description,
+                Name = entity.EventName,
                 Discipline = entity.Discipline,
                 SkillLevel = entity.SkillLevel,
                 Price = entity.Price,
                 AmountOfPlayers = entity.AmountOfPlayers,
                 Time = entity.Time,
                 DateWhen = entity.DateWhen,
-                ObjectId = objectEntity.Id
+                ObjectId = objectEntity.Id,
+                IsMultiSportCard = entity.IsMultisportCard
             };
             return result;
         }

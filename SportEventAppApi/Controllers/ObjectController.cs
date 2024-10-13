@@ -1,7 +1,5 @@
-﻿using ApplicationCore.Models;
-using Infrastructure.Entities;
+﻿using ApplicationCore.Models.req;
 using Managers.managers;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SportEventAppApi.Controllers
@@ -24,6 +22,13 @@ namespace SportEventAppApi.Controllers
             return Ok(result);
         }
         [HttpGet]
+        [Route("/object-base-info")]
+        public async Task<IActionResult> GetObjectsBaseInfo()
+        {
+            var result = await _objectManager.GetObjectsBaseInfo();
+            return Ok(result);
+        }
+        [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetObjectById(int id)
         {
@@ -39,14 +44,14 @@ namespace SportEventAppApi.Controllers
         }
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateObject(ObjectClass req, int id)
+        public async Task<IActionResult> UpdateObject(CreateObjectReq req, int id)
         {
             var result = await _objectManager.UpdateObject(req,id);
             return result == true ? NoContent() : Conflict();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateSportObject(ObjectClass req)
+        public async Task<IActionResult> CreateSportObject(CreateObjectReq req)
         {
             var result = await _objectManager.CreateObject(req);
             return result == true ? StatusCode(201) : Conflict();

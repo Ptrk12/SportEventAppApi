@@ -266,7 +266,6 @@ namespace SportEventAppApi.Config
                 {
                     Id = 1,
                     Name = "",
-                    Description = "Desc 1",
                     Price = 20.0m,
                     AmountOfPlayers = 12,
                     Time = 60,
@@ -282,7 +281,6 @@ namespace SportEventAppApi.Config
                 {
                     Id = 2,
                     Name = "",
-                    Description = "Desc 2",
                     Price = 22.0m,
                     AmountOfPlayers = 6,
                     Time = 30,
@@ -298,7 +296,6 @@ namespace SportEventAppApi.Config
                 {
                     Id = 3,
                     Name = "",
-                    Description = "Desc 3",
                     Price = 23.0m,
                     AmountOfPlayers = 10,
                     Time = 120,

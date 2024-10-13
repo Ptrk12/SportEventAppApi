@@ -1,4 +1,5 @@
 ﻿using ApplicationCore.Models;
+using ApplicationCore.Models.req;
 using Infrastructure.Mappers;
 using Infrastructure.Repositories;
 
@@ -17,9 +18,9 @@ namespace Managers.managers
             _sportEventsRepository = sportEventsRepository;
         }
 
-        public async Task<bool> CreateObject(ObjectClass req)
+        public async Task<bool> CreateObject(CreateObjectReq req)
         {
-            var entity = ObjectMapper.FromClassToEntity(req, null);
+            var entity = ObjectMapper.FromClassToEntityInsertReq(req, null);
             var result = await _objectRepository.CreateObject(entity);
             return result;
         }
@@ -48,6 +49,23 @@ namespace Managers.managers
             return result;
         }
 
+        public async Task<IEnumerable<ObjectBaseInfo>> GetObjectsBaseInfo()
+        {
+            var entityDb = await _objectRepository.GetAllObjects();
+            var result = new List<ObjectBaseInfo>();
+            foreach (var item in entityDb)
+            {
+                ObjectBaseInfo objBaseInfo = new ObjectBaseInfo()
+                {
+                    Id = item.Id,
+                    Name = item.Name
+                };
+
+                result.Add(objBaseInfo);
+            }
+            return result;
+        }
+
         public async Task<ObjectClass> GetObjectById(int id)
         {
             var entityDb = await _objectRepository.GetObjectById(id);
@@ -55,7 +73,7 @@ namespace Managers.managers
             return result;
         }
 
-        public async Task<bool> UpdateObject(ObjectClass objectEntity, int id)
+        public async Task<bool> UpdateObject(CreateObjectReq objectEntity, int id)
         {
             var result = false;
             var objectDb = await _objectRepository.GetObjectById(id);
@@ -63,7 +81,7 @@ namespace Managers.managers
 
             if (objectDb != null)
             {
-                var req = ObjectMapper.FromClassToEntity(objectEntity, sportEvents.ToList());
+                var req = ObjectMapper.FromClassToEntityInsertReq(objectEntity, sportEvents.ToList());
                 req.Id = objectDb.Id;
                 result = await _objectRepository.Updateobject(id, req);
             }
@@ -74,8 +92,9 @@ namespace Managers.managers
     {
         Task<ObjectClass> GetObjectById(int id);
         Task<IEnumerable<ObjectClass>> GetAllObjects();
-        Task<bool> CreateObject(ObjectClass req);
+        Task<bool> CreateObject(CreateObjectReq req);
         Task<bool> DeleteObject(int id);
-        Task<bool> UpdateObject(ObjectClass objectEntity, int id);
+        Task<bool> UpdateObject(CreateObjectReq objectEntity, int id);
+        Task<IEnumerable<ObjectBaseInfo>> GetObjectsBaseInfo();
     }
 }
