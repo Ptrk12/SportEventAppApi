@@ -18,6 +18,15 @@ namespace SportEventAppApi.Controllers
         }
 
         [HttpGet]
+        [Route("{id}")]
+        //[Authorize]
+        public async Task<IActionResult> GetSportEventById(int id)
+        {
+            var result = await _sportEventManager.GetSportEventById(id);
+            return Ok(result);
+        }
+
+        [HttpGet]
         //[Authorize]
         public async Task<IActionResult> GetAllSportEvents()
         {

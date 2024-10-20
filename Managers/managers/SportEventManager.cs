@@ -68,9 +68,16 @@ namespace Managers.managers
             //TO DO: Create lists of tasks
         }
 
-        public Task<SportEvent> GetSportEventById(int id)
+        public async Task<SportEvent?> GetSportEventById(int id)
         {
-            throw new NotImplementedException();
+            var eventDb = await _sportEventsRepository.GetSportEventById(id);
+
+            if(eventDb != null)
+            {
+                var result = SportEventMapper.FromEntityToSportEvent(eventDb);
+                return result;
+            }
+            return null;
         }
 
         private bool CheckCanModify(SportEventEntity entity)
