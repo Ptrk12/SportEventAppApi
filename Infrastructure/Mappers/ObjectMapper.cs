@@ -15,7 +15,8 @@ namespace Infrastructure.Mappers
                 Description = entity.Description,
                 Adress = entity.Adress,
                 City = entity.City,
-                ObjectType = entity.ObjectType
+                ObjectType = entity.ObjectType,
+                CreatedBy = entity.CreatedBy
             };
         }
 

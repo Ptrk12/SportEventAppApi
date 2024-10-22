@@ -9,19 +9,40 @@ namespace Managers.managers
     {
         private readonly IObjectRepository _objectRepository;
         private readonly ISportEventsRepository _sportEventsRepository;
+        private readonly IUserRepository _userRepository;
 
         public ObjectManager(
             IObjectRepository objectRepository, 
-            ISportEventsRepository sportEventsRepository)
+            ISportEventsRepository sportEventsRepository,
+            IUserRepository userRepository)
         {
             _objectRepository = objectRepository;
             _sportEventsRepository = sportEventsRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<bool> CreateObject(CreateObjectReq req)
         {
+            var createdBy = _userRepository.GetUserEmailFromToken();
             var entity = ObjectMapper.FromClassToEntityInsertReq(req, null);
+            entity.CreatedBy = createdBy;
             var result = await _objectRepository.CreateObject(entity);
+            return result;
+        }
+
+        public async Task<IEnumerable<ObjectClass>> GetObjectsCreatedByUser()
+        {
+            var allObjects = await _objectRepository.GetAllObjects();
+            var result = new List<ObjectClass>();
+
+            foreach(var obj in allObjects)
+            {
+                if(obj.CreatedBy == _userRepository.GetUserEmailFromToken())
+                {
+                    var mappedObj = ObjectMapper.FromEntityToObject(obj);
+                    result.Add(mappedObj);
+                }
+            }
             return result;
         }
 
@@ -96,5 +117,6 @@ namespace Managers.managers
         Task<bool> DeleteObject(int id);
         Task<bool> UpdateObject(CreateObjectReq objectEntity, int id);
         Task<IEnumerable<ObjectBaseInfo>> GetObjectsBaseInfo();
+        Task<IEnumerable<ObjectClass>> GetObjectsCreatedByUser();
     }
 }

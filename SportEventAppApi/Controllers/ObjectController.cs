@@ -1,5 +1,6 @@
 ﻿using ApplicationCore.Models.req;
 using Managers.managers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace SportEventAppApi.Controllers
@@ -51,10 +52,17 @@ namespace SportEventAppApi.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateSportObject(CreateObjectReq req)
         {
             var result = await _objectManager.CreateObject(req);
             return result == true ? StatusCode(201) : Conflict();
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetObjectsCreatedByUser()
+        {
+            var result = await _objectManager.GetObjectsCreatedByUser();
+            return Ok(result);
         }
     }
 }

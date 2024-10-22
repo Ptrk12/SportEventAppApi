@@ -10,5 +10,6 @@ namespace ApplicationCore.Models
         public string Adress { get; set; }
         public Cities City { get; set; }
         public ObjectTypes ObjectType { get; set; }
+        public string CreatedBy { get; set; }
     }
 }

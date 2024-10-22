@@ -128,7 +128,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "Tadeusza Ptaszyckiego 6, 31-979 Kraków",
                     City = Cities.Krakow,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -138,7 +139,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "Wawelska 3, 02-034 Warszawa",
                     City = Cities.Warszawa,
-                    ObjectType = ObjectTypes.Sports_field
+                    ObjectType = ObjectTypes.Sports_field,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -148,7 +150,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "Nowowiejska 37B, 02-079 Warszawa",
                     City = Cities.Warszawa,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -158,7 +161,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "Siennicka 40B, 04-393 Warszawa",
                     City = Cities.Warszawa,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -168,7 +172,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "Michała Ossowskiego 25, 03-542 Warszawa",
                     City = Cities.Warszawa,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -178,7 +183,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "al. 29 Listopada 58, 31-425 Kraków",
                     City = Cities.Krakow,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -188,7 +194,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "Kamienna 17, 30-001 Kraków",
                     City = Cities.Krakow,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -198,7 +205,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "Kazimierza Czapińskiego 5, 30-048 Kraków",
                     City = Cities.Krakow,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -208,7 +216,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "Niebieska 15, 30-685 Kraków",
                     City = Cities.Krakow,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -218,7 +227,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "Aleja Marszałka Ferdynanda Focha 40, 30-119 Kraków",
                     City = Cities.Krakow,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -228,7 +238,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "ul. Pułtuska 13, 53-116 Wrocław",
                     City = Cities.Wroclaw,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -238,7 +249,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "ul. Paderewskiego 35",
                     City = Cities.Wroclaw,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -248,7 +260,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "ul. Góralska 5",
                     City = Cities.Wroclaw,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -258,7 +271,8 @@ namespace SportEventAppApi.Config
                     Description = "",
                     Adress = "ul. Kozanowska 69",
                     City = Cities.Wroclaw,
-                    ObjectType = ObjectTypes.Hall
+                    ObjectType = ObjectTypes.Hall,
+                    CreatedBy = "myuser@email.com"
                 });
 
             modelBuilder.Entity<SportEventEntity>().HasData(

@@ -13,5 +13,6 @@ namespace Infrastructure.Entities
         public Cities City { get;set; }
         public ObjectTypes ObjectType { get;set; }
         public List<SportEventEntity> SportEvents { get; set; } = new List<SportEventEntity>();
+        public string CreatedBy { get; set; }
     }
 }
