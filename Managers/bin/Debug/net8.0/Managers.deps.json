@@ -1033,10 +1033,7 @@
           "Microsoft.EntityFrameworkCore": "8.0.4"
         },
         "runtime": {
-          "ApplicationCore.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "ApplicationCore.dll": {}
         }
       },
       "Infrastructure/1.0.0": {
@@ -1049,10 +1046,7 @@
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.4"
         },
         "runtime": {
-          "Infrastructure.dll": {
-            "assemblyVersion": "1.0.0",
-            "fileVersion": "1.0.0.0"
-          }
+          "Infrastructure.dll": {}
         }
       }
     }

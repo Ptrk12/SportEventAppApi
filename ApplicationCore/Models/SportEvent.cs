@@ -19,5 +19,6 @@ namespace ApplicationCore.Models
         public string? Address { get; set; }
         public int PeopleAssigned { get; set; }
         public bool IsMultisportCard { get; set; }
+        public bool CurrentUserAssignedToEvent { get; set; }
     }
 }

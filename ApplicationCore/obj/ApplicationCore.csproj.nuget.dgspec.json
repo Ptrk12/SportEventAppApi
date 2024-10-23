@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Users\\Patryk.Bajak\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj": {}
   },
   "projects": {
-    "D:\\Users\\Patryk.Bajak\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj": {
+    "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Users\\Patryk.Bajak\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj",
         "projectName": "ApplicationCore",
-        "projectPath": "D:\\Users\\Patryk.Bajak\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj",
-        "packagesPath": "D:\\Users\\Patryk.Bajak\\.nuget\\packages\\",
-        "outputPath": "D:\\Users\\Patryk.Bajak\\Desktop\\SportEventAppApi\\ApplicationCore\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\ApplicationCore.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\SportEventAppApi\\ApplicationCore\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "D:\\Users\\Patryk.Bajak\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -76,7 +76,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
