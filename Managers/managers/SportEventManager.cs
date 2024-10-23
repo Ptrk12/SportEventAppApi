@@ -56,16 +56,27 @@ namespace Managers.managers
         public async Task<IEnumerable<SportEvent>> GetAllSportEvents()
         {
             var dataDb = await _sportEventsRepository.GetAllSportEvents();
+            var currentUserEmail = _userRepository.GetUserEmailFromToken();
+
             var result = new List<SportEvent>();
 
             foreach(var item in dataDb)
             {
                 var sportEvent = SportEventMapper.FromEntityToSportEvent(item);
-                sportEvent.PeopleAssigned = await _sportEventsRepository.GetAssignedPeopleToEventCount(item.Id);
+                var assignersInTheEventString = await _sportEventsRepository.GetAssignersInEvent(item.Id);
+                if (!string.IsNullOrEmpty(assignersInTheEventString))
+                {
+                    var assignersInTheEvent = JsonSerializer.Deserialize<List<string>>(assignersInTheEventString);
+                    sportEvent.PeopleAssigned = assignersInTheEvent.Count;
+
+                    if (assignersInTheEvent != null && assignersInTheEvent.Contains(currentUserEmail))
+                    {
+                        sportEvent.CurrentUserAssignedToEvent = true;
+                    }
+                }            
                 result.Add(sportEvent);
             }
             return result;
-            //TO DO: Create lists of tasks
         }
 
         public Task<SportEvent> GetSportEventById(int id)
@@ -118,6 +129,7 @@ namespace Managers.managers
 
         public async Task<bool> DeleteSportEvent(int id)
         {
+            //DODAC SPRAWDZANIE CZY DO EVENTU PRZYPISANI SA LUDZIE JESLI TAK TO NIE MOZNA USUWAC !
             var result = false;
             var sportEventDb = await _sportEventsRepository.GetSportEventById(id);
 

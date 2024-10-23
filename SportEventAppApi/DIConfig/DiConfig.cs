@@ -39,6 +39,14 @@ namespace SportEventAppApi.DIConfig
             builder.Services.AddIdentityApiEndpoints<IdentityUser>()
                 .AddEntityFrameworkStores<SportEventAppDbContext>();
 
+            //swagger comments documentation
+            builder.Services.AddSwaggerGen(c =>
+            {
+                var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
+
             return builder;
         }
     }

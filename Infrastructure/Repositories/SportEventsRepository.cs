@@ -114,8 +114,12 @@ namespace Infrastructure.Repositories
 
         public async Task<string?> GetAssignersInEvent(int sportEventId)
         {
-            var result = (await _context.EventAssigners.AsNoTracking().FirstOrDefaultAsync(x => x.EventId == sportEventId)).AssignedPeople;
-            return result;
+            var result = await _context.EventAssigners.AsNoTracking().FirstOrDefaultAsync(x => x.EventId == sportEventId);
+            if(result != null)
+            {
+                return result.AssignedPeople;
+            }
+            return "";
         }
 
         public async Task<SportEventEntity> GetSportEventById(int id)
