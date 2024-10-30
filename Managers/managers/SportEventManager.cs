@@ -53,6 +53,26 @@ namespace Managers.managers
             return result;
         }
 
+        public async Task<IEnumerable<SportEvent>> GetCurrentLoggedUserEventsAssignedTo()
+        {
+            var dataDb = await _sportEventsRepository.GetAllSportEvents();
+            var currentUserEmail = _userRepository.GetUserEmailFromToken();
+            var result = new List<SportEvent>();
+
+            if (!string.IsNullOrEmpty(currentUserEmail))
+            {
+                foreach(var item in dataDb)
+                {
+                    var usersInEvent = await _sportEventsRepository.GetAssignersInEvent(item.Id);
+                    if(!string.IsNullOrEmpty(usersInEvent) && usersInEvent.Contains(currentUserEmail))
+                    {
+                        result.Add(SportEventMapper.FromEntityToSportEvent(item));
+                    }
+                }
+            }
+            return result;
+        }
+
         public async Task<IEnumerable<SportEvent>> GetAllSportEvents()
         {
             var dataDb = await _sportEventsRepository.GetAllSportEvents();
@@ -146,13 +166,13 @@ namespace Managers.managers
         {
             var result = false;
             var currentAssigners = await _sportEventsRepository.GetAssignersInEvent(sportEventId);
+            var currentUserEmail = _userRepository.GetUserEmailFromToken();
 
             if (!string.IsNullOrEmpty(currentAssigners))
             {
                 var currentAssignersArrayDb = JsonSerializer.Deserialize<List<string>>(currentAssigners);
                 var currentAssignersArray = JsonSerializer.Deserialize<List<string>>(currentAssigners);
 
-                var currentUserEmail = _userRepository.GetUserEmailFromToken();
 
                 if (!string.IsNullOrEmpty(currentUserEmail))
                 {
@@ -171,12 +191,24 @@ namespace Managers.managers
                     }
                 }
             }
+            else
+            {
+                if (operationType == "add")
+                {
+                    var assignersList = new List<string>();
+                    assignersList.Add(currentUserEmail);
+
+                    var currentAssignersJsonArray = JsonSerializer.Serialize(assignersList);
+                    result = await _sportEventsRepository.AssignOrRemoveFromEvent(sportEventId, currentAssignersJsonArray);
+                }
+            }
 
             return result;
         }
     }
     public interface ISportEventManager
     {
+        Task<IEnumerable<SportEvent>> GetCurrentLoggedUserEventsAssignedTo();
         Task<bool> AssignOrRemoveFromEvent(int sportEventId, string operationType);
         Task<IEnumerable<SportEvent>> GetAllSportEvents();
         Task<SportEvent> GetSportEventById(int id);
