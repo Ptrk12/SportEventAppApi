@@ -3,6 +3,7 @@ using ApplicationCore.Models.req;
 using Infrastructure.Entities;
 using Infrastructure.Mappers;
 using Infrastructure.Repositories;
+using Microsoft.AspNet.Identity;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -223,6 +224,8 @@ namespace Managers.managers
             var result = false;
             var currentAssigners = await _sportEventsRepository.GetAssignersInEvent(sportEventId);
             var currentUserEmail = _userRepository.GetUserEmailFromToken();
+            var sportEvent = await _sportEventsRepository.GetSportEventById(sportEventId);
+            var objectDb = await _objectRepository.GetObjectById(sportEvent.ObjectId);
 
             if (!string.IsNullOrEmpty(currentAssigners))
             {
@@ -235,12 +238,14 @@ namespace Managers.managers
                     if (!currentAssignersArray.Contains(currentUserEmail) && operationType == "add")
                     {
                         currentAssignersArray.Add(currentUserEmail);
+                        await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "add");
                     }
                     else if (currentAssignersArray.Contains(currentUserEmail) && operationType == "remove")
                     {
                         currentAssignersArray.Remove(currentUserEmail);
-                    }
-                    if(currentAssignersArray.Count != currentAssignersArrayDb.Count)
+                        await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "remove");
+                    }               
+                    if (currentAssignersArray.Count != currentAssignersArrayDb.Count)
                     {
                         var currentAssignersJsonArray = JsonSerializer.Serialize(currentAssignersArray);
                         result = await _sportEventsRepository.AssignOrRemoveFromEvent(sportEventId, currentAssignersJsonArray);
@@ -256,10 +261,38 @@ namespace Managers.managers
 
                     var currentAssignersJsonArray = JsonSerializer.Serialize(assignersList);
                     result = await _sportEventsRepository.AssignOrRemoveFromEvent(sportEventId, currentAssignersJsonArray);
+
+                    await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "add");
                 }
             }
 
             return result;
+        }
+
+        private async Task OperationOnUserMoney(ObjectEntity objectDb, SportEventEntity sportEvent, string currentUserEmail,string operation)
+        {
+            if (objectDb?.PricePerHour != null)
+            {
+                if (sportEvent.AmountOfPlayers != 0)
+                {
+                    var price = (objectDb.PricePerHour * sportEvent.Time) / sportEvent.AmountOfPlayers;
+                    var currentUserMoney = await _userRepository.GetUserMone(currentUserEmail);
+                    if (currentUserMoney != null)
+                    {
+                        if(operation == "add")
+                        {
+                            var userMoneyParsed = (double)currentUserMoney;
+                            await _userRepository.UpdateUserMoney(currentUserEmail, userMoneyParsed - price);
+                        }
+                        else
+                        {
+                            var userMoneyParsed = (double)currentUserMoney;
+                            await _userRepository.UpdateUserMoney(currentUserEmail, userMoneyParsed + price);
+                        }
+
+                    }
+                }
+            }
         }
     }
     public interface ISportEventManager
