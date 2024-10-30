@@ -17,6 +17,19 @@ namespace SportEventAppApi.Controllers
         }
 
         ///<summary>
+        ///  Get all sport events which user is assigned to
+        /// </summary>
+        /// <response code="200">Success</response>
+        [HttpGet]
+        [Authorize]
+        [Route("current-user-events")]
+        public async Task<IActionResult> GetCurrentLoggedUserEventsAssignedTo()
+        {
+            var result = await _sportEventManager.GetCurrentLoggedUserEventsAssignedTo();
+            return Ok(result);
+        }
+
+        ///<summary>
         ///  Get all sport events available in the system
         /// </summary>
         /// <response code="200">Success</response>
@@ -122,7 +135,7 @@ namespace SportEventAppApi.Controllers
         /// <response code="204">Successfully updated the sport event</response>
         /// <response code="409">A conflict occurred, sport event was not updated</response>
         [HttpPut]
-        [Authorize]
+        //[Authorize]
         [Route("assign-or-remove-from-event/{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]

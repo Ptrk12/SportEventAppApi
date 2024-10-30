@@ -51,7 +51,9 @@ namespace Infrastructure.Repositories
 
                 if(entity != null)
                 {
+                    _context.ChangeTracker.Clear();
                     _context.SportEvents.Remove(entity);
+                    await _context.SaveChangesAsync();
                     return true;
                 }
                 return false;
@@ -90,6 +92,23 @@ namespace Infrastructure.Repositories
                     foundEntity.AssignedPeople = assignersJson;
                     await _context.SaveChangesAsync();
                     result = true;
+                }
+                else
+                {
+                    var sportevent = await _context.SportEvents.FirstOrDefaultAsync(x => x.Id == eventId);
+                    if(sportevent != null)
+                    {
+                        var assigners = new EventAssignersEntity() 
+                        { 
+                            EventId = eventId ,
+                            AssignedPeople = assignersJson,
+                            SportEvent = sportevent
+                        };
+                        await _context.EventAssigners.AddAsync(assigners);
+                        await _context.SaveChangesAsync();
+                        result = true;
+                    }
+
                 }
 
                 return result;
