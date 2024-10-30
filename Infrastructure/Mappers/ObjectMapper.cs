@@ -16,7 +16,8 @@ namespace Infrastructure.Mappers
                 Adress = entity.Adress,
                 City = entity.City,
                 ObjectType = entity.ObjectType,
-                CreatedBy = entity.CreatedBy
+                CreatedBy = entity.CreatedBy,
+                PricePerHour = entity.PricePerHour
             };
         }
 
@@ -29,7 +30,8 @@ namespace Infrastructure.Mappers
                 Adress = entity.Adress,
                 City = entity.City,
                 ObjectType = entity.ObjectType,
-                SportEvents = sportEvents
+                SportEvents = sportEvents,
+                PricePerHour = entity.PricePerHour
             };
         }
     }

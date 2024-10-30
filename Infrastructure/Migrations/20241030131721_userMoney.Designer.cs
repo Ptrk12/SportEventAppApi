@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportEventAppApi.Config;
 
@@ -11,9 +12,11 @@ using SportEventAppApi.Config;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SportEventAppDbContext))]
-    partial class SportEventAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241030131721_userMoney")]
+    partial class userMoney
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -294,7 +297,7 @@ namespace Infrastructure.Migrations
                             Id = 1,
                             AmountOfPlayers = 12,
                             CreatedBy = "myuser@email.com",
-                            DateWhen = new DateTime(2024, 10, 30, 14, 22, 48, 223, DateTimeKind.Local).AddTicks(5652),
+                            DateWhen = new DateTime(2024, 10, 30, 14, 17, 20, 672, DateTimeKind.Local).AddTicks(1124),
                             Discipline = "Football",
                             IsMultiSportCard = true,
                             Name = "",
@@ -307,7 +310,7 @@ namespace Infrastructure.Migrations
                             Id = 2,
                             AmountOfPlayers = 6,
                             CreatedBy = "myuser@email.com",
-                            DateWhen = new DateTime(2024, 10, 30, 14, 22, 48, 223, DateTimeKind.Local).AddTicks(5738),
+                            DateWhen = new DateTime(2024, 10, 30, 14, 17, 20, 672, DateTimeKind.Local).AddTicks(1242),
                             Discipline = "Football",
                             IsMultiSportCard = true,
                             Name = "",
@@ -320,7 +323,7 @@ namespace Infrastructure.Migrations
                             Id = 3,
                             AmountOfPlayers = 10,
                             CreatedBy = "myuser@email.com",
-                            DateWhen = new DateTime(2024, 10, 30, 14, 22, 48, 223, DateTimeKind.Local).AddTicks(5763),
+                            DateWhen = new DateTime(2024, 10, 30, 14, 17, 20, 672, DateTimeKind.Local).AddTicks(1267),
                             Discipline = "Football",
                             IsMultiSportCard = false,
                             Name = "",
@@ -618,15 +621,15 @@ namespace Infrastructure.Migrations
                         {
                             Id = "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ffdb4d04-09db-4983-82bc-ffab05b153d4",
+                            ConcurrencyStamp = "752ed554-3b23-4006-9b79-538fe7bd0036",
                             Email = "myuser@email.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "MYUSER@EMAIL.COM",
                             NormalizedUserName = "MYUSER@EMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAENScNzm1noQccJrtPofE48gYmbOj6f9t886HQS56JiWQqbCEiVEJWOEuuu8by6ul1g==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFcekVra4+D4FR32WZpLeV668owTsR5H0IrOyWU75y2Pj5DM9tL2OLnfQ/7ZfiecKQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "926c3a4f-a1b4-48bd-9480-443fc7a9ae7a",
+                            SecurityStamp = "60d031ab-74f3-4818-a8b5-327fdc0fc555",
                             TwoFactorEnabled = false,
                             UserName = "myuser@email.com",
                             Money = 100.0
@@ -635,15 +638,15 @@ namespace Infrastructure.Migrations
                         {
                             Id = "d3e7c295-d723-4d8e-8c39-be6107f44020",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7d7ba903-2e62-474b-8083-825248ef978e",
+                            ConcurrencyStamp = "4d2dfb12-4072-4c8a-a751-fa50cc6e050b",
                             Email = "admin@email.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN@EMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEAJPvQVEhcWlGZdd4mmL/zA1X13p9g7XK61m1/rpp5CoSNfE2Z1X58SJD+Kdm8v6ZQ==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEHYlg62GivCXECpxTRC50l2PSbBW7ql8jpEUcyQGv9XOdJvYvXa1x8xjCRLa5uI7aQ==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "68545413-0051-4615-b6af-42c7e948de7e",
+                            SecurityStamp = "ad3bd4de-6ace-4d50-ac73-a31402b7dc85",
                             TwoFactorEnabled = false,
                             UserName = "admin@email.com",
                             Money = 100.0

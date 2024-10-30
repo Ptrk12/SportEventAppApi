@@ -11,5 +11,6 @@ namespace ApplicationCore.Models
         public Cities City { get; set; }
         public ObjectTypes ObjectType { get; set; }
         public string CreatedBy { get; set; }
+        public double PricePerHour { get; set; }
     }
 }

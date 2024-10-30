@@ -33,11 +33,19 @@ namespace Infrastructure.Repositories
         {
             try
             {
+                if (entity.SportEvent != null)
+                {
+                    var existingSportEvent = await _context.SportEvents
+                        .FindAsync(entity.SportEvent.Id); 
+
+                    entity.SportEvent = existingSportEvent; 
+                }
+
                 await _context.EventAssigners.AddAsync(entity);
                 await _context.SaveChangesAsync();
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }

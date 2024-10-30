@@ -1,3 +1,4 @@
+using Infrastructure.Entities;
 using Microsoft.AspNetCore.Identity;
 using SportEventAppApi.DIConfig;
 
@@ -24,7 +25,7 @@ namespace SportEventAppApi
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
 
             //identity
-            app.MapIdentityApi<IdentityUser>();
+            app.MapIdentityApi<UserEntity>();
 
             //exception handler
             app.UseExceptionHandler(_ => { });

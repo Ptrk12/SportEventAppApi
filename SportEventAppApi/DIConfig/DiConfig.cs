@@ -5,6 +5,7 @@ using SportEventAppApi.Config;
 using Microsoft.AspNetCore.Identity;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Infrastructure.Entities;
 
 namespace SportEventAppApi.DIConfig
 {
@@ -36,7 +37,7 @@ namespace SportEventAppApi.DIConfig
 
             //identity
             builder.Services.AddAuthorization();
-            builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+            builder.Services.AddIdentityApiEndpoints<UserEntity>()
                 .AddEntityFrameworkStores<SportEventAppDbContext>();
 
             //swagger comments documentation

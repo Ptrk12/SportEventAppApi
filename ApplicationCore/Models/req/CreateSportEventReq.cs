@@ -16,9 +16,9 @@ namespace ApplicationCore.Models.req
         [EnumDataType(typeof(SkillLevel))]
         public SkillLevel SkillLevel { get; set; }
         public int ObjectId { get; set; }
-        [Required]
-        [Range(0, 10000, ErrorMessage = "Please enter valid price")]
-        public decimal Price { get; set; }
+        //[Required]
+        //[Range(0, 10000, ErrorMessage = "Please enter valid price")]
+        //public decimal Price { get; set; }
         [Required]
         [Range(0, 10000, ErrorMessage = "Please enter valid amount of players")]
         public int AmountOfPlayers { get; set; }

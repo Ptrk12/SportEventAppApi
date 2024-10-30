@@ -18,5 +18,7 @@ namespace ApplicationCore.Models.req
         [Required]
         [EnumDataType(typeof(ObjectTypes))]
         public ObjectTypes ObjectType { get; set; }
+        [Required]
+        public double PricePerHour { get; set; }
     }
 }

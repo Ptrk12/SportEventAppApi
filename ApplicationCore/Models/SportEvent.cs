@@ -10,7 +10,7 @@ namespace ApplicationCore.Models
         public Disciplines Discipline { get; set; }
         public SkillLevel SkillLevel { get; set; }
         public int ObjectId { get; set; }
-        public decimal Price { get; set; }
+        public double Price { get; set; }
         public int AmountOfPlayers { get; set; }
         public int Time { get; set; }
         public DateTime DateWhen { get; set; }
@@ -20,5 +20,25 @@ namespace ApplicationCore.Models
         public int PeopleAssigned { get; set; }
         public bool IsMultisportCard { get; set; }
         public bool CurrentUserAssignedToEvent { get; set; }
+        private bool isActive { get; set; }
+        public bool IsActive
+        {
+            get
+            {
+                if(DateTime.Now >= DateWhen)
+                {
+                    return false;
+                }
+                if (DateTime.Now >= DateWhen.AddHours(-2) && DateTime.Now < DateWhen && PeopleAssigned != AmountOfPlayers)
+                {
+                    return false;
+                }
+                return isActive;
+            }
+            set
+            {
+                isActive = value;
+            }
+        }
     }
 }

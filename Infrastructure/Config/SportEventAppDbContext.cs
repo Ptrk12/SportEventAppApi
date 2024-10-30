@@ -16,6 +16,7 @@ namespace SportEventAppApi.Config
             _configuration = configuration;
         }
         public DbSet<ObjectEntity> Objects { get; set; }
+        public DbSet<UserEntity> Users { get; set; }
         public DbSet<SportEventEntity> SportEvents { get; set; }
         public DbSet<TopObjectsEntity> TopObjects { get; set; }
         public DbSet<EventAssignersEntity> EventAssigners { get; set; }
@@ -34,7 +35,7 @@ namespace SportEventAppApi.Config
 
             var hasher = new PasswordHasher<IdentityRole>();
 
-            modelBuilder.Entity<SportEventEntity>().Property(p => p.Price).HasColumnType("decimal(18,4)");
+           // modelBuilder.Entity<SportEventEntity>().Property(p => p.Price).HasColumnType("decimal(18,4)");
 
             modelBuilder.Entity<ObjectEntity>()
                 .Property(e => e.ObjectType)
@@ -85,24 +86,26 @@ namespace SportEventAppApi.Config
             });
 
 
-            modelBuilder.Entity<IdentityUser>().HasData(
-                new IdentityUser
+            modelBuilder.Entity<UserEntity>().HasData(
+                new UserEntity
                 {
                     Id = "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612",
                     UserName = "myuser@email.com",
                     Email = "myuser@email.com",
                     NormalizedUserName = "MYUSER@EMAIL.COM",
                     NormalizedEmail = "MYUSER@EMAIL.COM",
-                    PasswordHash = hasher.HashPassword(null, "Test123!")
+                    PasswordHash = hasher.HashPassword(null, "Test123!"),
+                    Money = 100
                 },
-                new IdentityUser
+                new UserEntity
                 {
                     Id = "d3e7c295-d723-4d8e-8c39-be6107f44020",
                     UserName = "admin@email.com",
                     Email = "admin@email.com",
                     NormalizedUserName = "ADMIN@EMAIL.COM",
                     NormalizedEmail = "ADMIN@EMAIL.COM",
-                    PasswordHash = hasher.HashPassword(null, "Test123!")
+                    PasswordHash = hasher.HashPassword(null, "Test123!"),
+                    Money = 100
                 }
             ); 
 
@@ -129,7 +132,8 @@ namespace SportEventAppApi.Config
                     Adress = "Tadeusza Ptaszyckiego 6, 31-979 Kraków",
                     City = Cities.Krakow,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -140,7 +144,8 @@ namespace SportEventAppApi.Config
                     Adress = "Wawelska 3, 02-034 Warszawa",
                     City = Cities.Warszawa,
                     ObjectType = ObjectTypes.Sports_field,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -151,7 +156,8 @@ namespace SportEventAppApi.Config
                     Adress = "Nowowiejska 37B, 02-079 Warszawa",
                     City = Cities.Warszawa,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -162,7 +168,8 @@ namespace SportEventAppApi.Config
                     Adress = "Siennicka 40B, 04-393 Warszawa",
                     City = Cities.Warszawa,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -173,7 +180,8 @@ namespace SportEventAppApi.Config
                     Adress = "Michała Ossowskiego 25, 03-542 Warszawa",
                     City = Cities.Warszawa,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -184,7 +192,8 @@ namespace SportEventAppApi.Config
                     Adress = "al. 29 Listopada 58, 31-425 Kraków",
                     City = Cities.Krakow,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -195,7 +204,8 @@ namespace SportEventAppApi.Config
                     Adress = "Kamienna 17, 30-001 Kraków",
                     City = Cities.Krakow,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -206,7 +216,8 @@ namespace SportEventAppApi.Config
                     Adress = "Kazimierza Czapińskiego 5, 30-048 Kraków",
                     City = Cities.Krakow,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -217,7 +228,8 @@ namespace SportEventAppApi.Config
                     Adress = "Niebieska 15, 30-685 Kraków",
                     City = Cities.Krakow,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -228,7 +240,8 @@ namespace SportEventAppApi.Config
                     Adress = "Aleja Marszałka Ferdynanda Focha 40, 30-119 Kraków",
                     City = Cities.Krakow,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -239,7 +252,8 @@ namespace SportEventAppApi.Config
                     Adress = "ul. Pułtuska 13, 53-116 Wrocław",
                     City = Cities.Wroclaw,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -250,7 +264,8 @@ namespace SportEventAppApi.Config
                     Adress = "ul. Paderewskiego 35",
                     City = Cities.Wroclaw,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -261,7 +276,8 @@ namespace SportEventAppApi.Config
                     Adress = "ul. Góralska 5",
                     City = Cities.Wroclaw,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
             modelBuilder.Entity<ObjectEntity>().HasData(
                 new ObjectEntity()
@@ -272,7 +288,8 @@ namespace SportEventAppApi.Config
                     Adress = "ul. Kozanowska 69",
                     City = Cities.Wroclaw,
                     ObjectType = ObjectTypes.Hall,
-                    CreatedBy = "myuser@email.com"
+                    CreatedBy = "myuser@email.com",
+                    PricePerHour = 200
                 });
 
             modelBuilder.Entity<SportEventEntity>().HasData(
@@ -280,7 +297,7 @@ namespace SportEventAppApi.Config
                 {
                     Id = 1,
                     Name = "",
-                    Price = 20.0m,
+                   // Price = 20.0m,
                     AmountOfPlayers = 12,
                     Time = 60,
                     DateWhen = DateTime.Now,
@@ -295,7 +312,7 @@ namespace SportEventAppApi.Config
                 {
                     Id = 2,
                     Name = "",
-                    Price = 22.0m,
+                    //Price = 22.0m,
                     AmountOfPlayers = 6,
                     Time = 30,
                     DateWhen = DateTime.Now,
@@ -310,7 +327,7 @@ namespace SportEventAppApi.Config
                 {
                     Id = 3,
                     Name = "",
-                    Price = 23.0m,
+                    //Price = 23.0m,
                     AmountOfPlayers = 10,
                     Time = 120,
                     DateWhen = DateTime.Now,
