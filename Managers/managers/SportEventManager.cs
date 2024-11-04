@@ -3,7 +3,6 @@ using ApplicationCore.Models.req;
 using Infrastructure.Entities;
 using Infrastructure.Mappers;
 using Infrastructure.Repositories;
-using Microsoft.AspNet.Identity;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -85,7 +84,37 @@ namespace Managers.managers
                     var usersInEvent = await _sportEventsRepository.GetAssignersInEvent(item.Id);
                     if(!string.IsNullOrEmpty(usersInEvent) && usersInEvent.Contains(currentUserEmail))
                     {
-                        result.Add(SportEventMapper.FromEntityToSportEvent(item));
+                        var assignersInTheEvent = JsonSerializer.Deserialize<List<string>>(usersInEvent);
+                        var sportEvent = SportEventMapper.FromEntityToSportEvent(item);
+                        sportEvent.PeopleAssigned = assignersInTheEvent.Count();
+                        sportEvent.IsActive = true;
+                        sportEvent.CurrentUserAssignedToEvent = true;
+
+                        //WYDZIELIC DO OSOBNEJ FUNKCJI !!!!!!!!!!!!
+                        var sportObj = await _objectRepository.GetObjectById(item.ObjectId);
+
+                        if (sportObj?.PricePerHour != null)
+                        {
+                            if (item.AmountOfPlayers != 0)
+                            {
+                                var price = (sportObj.PricePerHour * item.Time) / item.AmountOfPlayers;
+
+                                sportEvent.Price = price;
+                            }
+                            else
+                            {
+                                sportEvent.Price = 1;
+                            }
+
+                        }
+
+                        if (sportEvent.IsActive == false)
+                        {                          
+                            await Task.WhenAll(ReturnMoneyIfEventExpired(assignersInTheEvent, sportEvent.Price), _sportEventsRepository.DeleteSportEvent(item.Id));
+                            continue;
+                        }
+
+                        result.Add(sportEvent);
                     }
                 }
             }
@@ -117,6 +146,8 @@ namespace Managers.managers
                 var sportEvent = SportEventMapper.FromEntityToSportEvent(item);
                 sportEvent.IsActive = true;
                 var assignersInTheEventString = await _sportEventsRepository.GetAssignersInEvent(item.Id);
+
+                //WYDZIELIC DO OSOBNEJ FUNKCJI !!!!!!!!!!!!!!
                 var sportObj = await _objectRepository.GetObjectById(item.ObjectId);
 
                 if(sportObj?.PricePerHour != null)
@@ -142,15 +173,18 @@ namespace Managers.managers
                     if(sportEvent.IsActive == false)
                     {
                         await ReturnMoneyIfEventExpired(assignersInTheEvent, sportEvent.Price);
-                        await _sportEventsRepository.DeleteSportEvent(item.Id);
-                        continue;
                     }
 
                     if (assignersInTheEvent != null && assignersInTheEvent.Contains(currentUserEmail))
                     {
                         sportEvent.CurrentUserAssignedToEvent = true;
                     }
-                }            
+                }   
+                if(sportEvent.IsActive == false)
+                {
+                    await _sportEventsRepository.DeleteSportEvent(item.Id);
+                    continue;
+                }
                 result.Add(sportEvent);
             }
             return result;
@@ -226,6 +260,7 @@ namespace Managers.managers
             var currentUserEmail = _userRepository.GetUserEmailFromToken();
             var sportEvent = await _sportEventsRepository.GetSportEventById(sportEventId);
             var objectDb = await _objectRepository.GetObjectById(sportEvent.ObjectId);
+            
 
             if (!string.IsNullOrEmpty(currentAssigners))
             {
@@ -238,12 +273,18 @@ namespace Managers.managers
                     if (!currentAssignersArray.Contains(currentUserEmail) && operationType == "add")
                     {
                         currentAssignersArray.Add(currentUserEmail);
-                        await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "add");
+                        if(!await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "add"))
+                        {
+                            return false;
+                        }
                     }
                     else if (currentAssignersArray.Contains(currentUserEmail) && operationType == "remove")
                     {
                         currentAssignersArray.Remove(currentUserEmail);
-                        await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "remove");
+                        if(!await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "remove"))
+                        {
+                            return false;
+                        }
                     }               
                     if (currentAssignersArray.Count != currentAssignersArrayDb.Count)
                     {
@@ -262,14 +303,17 @@ namespace Managers.managers
                     var currentAssignersJsonArray = JsonSerializer.Serialize(assignersList);
                     result = await _sportEventsRepository.AssignOrRemoveFromEvent(sportEventId, currentAssignersJsonArray);
 
-                    await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "add");
+                    if(!await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "add"))
+                    {
+                        return false;
+                    }
                 }
             }
 
             return result;
         }
 
-        private async Task OperationOnUserMoney(ObjectEntity objectDb, SportEventEntity sportEvent, string currentUserEmail,string operation)
+        private async Task<bool> OperationOnUserMoney(ObjectEntity objectDb, SportEventEntity sportEvent, string currentUserEmail,string operation)
         {
             if (objectDb?.PricePerHour != null)
             {
@@ -282,17 +326,32 @@ namespace Managers.managers
                         if(operation == "add")
                         {
                             var userMoneyParsed = (double)currentUserMoney;
-                            await _userRepository.UpdateUserMoney(currentUserEmail, userMoneyParsed - price);
+                            if(userMoneyParsed - price > 0)
+                            {
+                                return await _userRepository.UpdateUserMoney(currentUserEmail, userMoneyParsed - price);
+                            }
+                            else
+                            {
+                                return false;
+                            }                         
                         }
                         else
                         {
                             var userMoneyParsed = (double)currentUserMoney;
-                            await _userRepository.UpdateUserMoney(currentUserEmail, userMoneyParsed + price);
+                            if(userMoneyParsed - price > 0)
+                            {
+                                return await _userRepository.UpdateUserMoney(currentUserEmail, userMoneyParsed + price);
+                            }
+                            else
+                            {
+                                return false;
+                            }
                         }
 
                     }
                 }
             }
+            return false;
         }
     }
     public interface ISportEventManager

@@ -31,6 +31,7 @@ namespace SportEventAppApi.DIConfig
             //services mang
             builder.Services.AddScoped<ISportEventManager, SportEventManager>();
             builder.Services.AddScoped<IObjectManager, ObjectManager>();
+            builder.Services.AddScoped<IUserManager, UserManager>();
 
             //sql con
             builder.Services.AddDbContext<SportEventAppDbContext>();
