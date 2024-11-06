@@ -151,7 +151,7 @@ namespace Infrastructure.Repositories
 
         public async Task<SportEventEntity> GetSportEventById(int id)
         {
-            var result = await _context.SportEvents.AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id);
+            var result = await _context.SportEvents.Include(x=>x.Object).AsNoTracking().FirstOrDefaultAsync(x=>x.Id == id);
             return result;
         }
 

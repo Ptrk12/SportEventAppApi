@@ -190,11 +190,6 @@ namespace Managers.managers
             return result;
         }
 
-        public Task<SportEvent> GetSportEventById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         private bool CheckCanModify(SportEventEntity entity)
         {
             var role = _userRepository.CheckIfAdmin();
@@ -353,15 +348,42 @@ namespace Managers.managers
             }
             return false;
         }
+
+        public async Task<SportEvent> GetSportEventById(int id)
+        {
+            var eventDb = await _sportEventsRepository.GetSportEventById(id);
+            if(eventDb != null)
+            {
+                var objectDd = await _objectRepository.GetObjectById(eventDb.ObjectId);
+
+                var result = SportEventMapper.FromEntityToSportEvent(eventDb);
+
+                if (objectDd != null)
+                {
+                    if (eventDb.AmountOfPlayers != 0)
+                    {
+                        var price = (objectDd.PricePerHour * eventDb.Time) / eventDb.AmountOfPlayers;
+
+                        result.Price = price;
+                    }
+                    else
+                    {
+                        result.Price = 1;
+                    }
+                }
+                return result;
+            }
+            return new SportEvent();
+        }
     }
     public interface ISportEventManager
     {
         Task<IEnumerable<SportEvent>> GetCurrentLoggedUserEventsAssignedTo();
         Task<bool> AssignOrRemoveFromEvent(int sportEventId, string operationType);
         Task<IEnumerable<SportEvent>> GetAllSportEvents();
-        Task<SportEvent> GetSportEventById(int id);
         Task<bool> CreateSportEvent(CreateSportEventReq sportEvent);
         Task<bool> UpdateSportEvent(CreateSportEventReq sportEvent, int id);
         Task<bool> DeleteSportEvent(int id);
+        Task<SportEvent> GetSportEventById(int id);
     }
 }

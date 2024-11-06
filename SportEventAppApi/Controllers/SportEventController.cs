@@ -144,5 +144,21 @@ namespace SportEventAppApi.Controllers
             var result = await _sportEventManager.AssignOrRemoveFromEvent(id,operationType);
             return result == true ? NoContent() : Conflict();
         }
+
+        /// <summary>
+        /// Get sportsevent by id
+        /// </summary>
+        /// <param name="id">Id of the sports event</param>
+        /// <response code="202">Success</response>
+        /// <returns>Sports event</returns>
+        [HttpGet]
+        [Route("{id}")]
+        //[Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetSportEventById(int id)
+        {
+            var result = await _sportEventManager.GetSportEventById(id);
+            return Ok(result);
+        }
     }
 }
