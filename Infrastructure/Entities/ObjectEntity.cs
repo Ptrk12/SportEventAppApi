@@ -15,5 +15,6 @@ namespace Infrastructure.Entities
         public ObjectTypes ObjectType { get;set; }
         public List<SportEventEntity> SportEvents { get; set; } = new List<SportEventEntity>();
         public string CreatedBy { get; set; }
+        public virtual UserEntity? User { get; set; }
     }
 }
