@@ -18,7 +18,6 @@ namespace SportEventAppApi.Config
         public DbSet<ObjectEntity> Objects { get; set; }
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<SportEventEntity> SportEvents { get; set; }
-        public DbSet<TopObjectsEntity> TopObjects { get; set; }
         public DbSet<EventAssignersEntity> EventAssigners { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -56,6 +55,29 @@ namespace SportEventAppApi.Config
                     v => (Disciplines)Enum.Parse(typeof(Disciplines), v));
 
             modelBuilder.Entity<SportEventEntity>()
+                .HasOne(se => se.User)
+                .WithMany()
+                .HasForeignKey(se => se.CreatedBy)
+                .HasPrincipalKey(u => u.UserName)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<ObjectEntity>()
+                 .HasOne(se => se.User)
+                 .WithMany()
+                 .HasForeignKey(se => se.CreatedBy)
+                 .HasPrincipalKey(u => u.UserName)
+                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<SportEventEntity>()
+                .HasOne(se => se.Object)
+                .WithMany(o => o.SportEvents)
+                .HasForeignKey(se => se.ObjectId)
+                .OnDelete(DeleteBehavior.NoAction); 
+
+
+
+
+            modelBuilder.Entity<SportEventEntity>()
                 .Property(e => e.SkillLevel)
                 .HasConversion(
                     v => v.ToString(),
@@ -67,9 +89,7 @@ namespace SportEventAppApi.Config
 
             modelBuilder.Entity<EventAssignersEntity>()
                 .HasOne(x => x.SportEvent);
-
-            modelBuilder.Entity<TopObjectsEntity>()
-                .HasOne(x => x.Object);
+                
 
             modelBuilder.Entity<IdentityRole>().HasData(new IdentityRole
             {
@@ -336,24 +356,6 @@ namespace SportEventAppApi.Config
                     SkillLevel = SkillLevel.Amateur,
                     ObjectId = 12,
                     IsMultiSportCard = false
-                });
-
-            modelBuilder.Entity<TopObjectsEntity>().HasData(
-                new TopObjectsEntity() 
-                {Id = 1,
-                Points = 90,
-                ObjectId = 12},
-                new TopObjectsEntity()
-                {
-                    Id = 2,
-                    Points = 21,
-                    ObjectId = 13
-                },
-                new TopObjectsEntity()
-                {
-                    Id = 3,
-                    Points = 66,
-                    ObjectId = 14
                 });
         }
     }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -32,7 +32,9 @@ namespace Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    Discriminator = table.Column<string>(type: "nvarchar(13)", maxLength: 13, nullable: false),
+                    Money = table.Column<double>(type: "float", nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: false),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -50,23 +52,7 @@ namespace Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Objects",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ObjectType = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Objects", x => x.Id);
+                    table.UniqueConstraint("AK_AspNetUsers_UserName", x => x.UserName);
                 });
 
             migrationBuilder.CreateTable(
@@ -176,18 +162,40 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SportEvents",
+                name: "Objects",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Adress = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PricePerHour = table.Column<double>(type: "float", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ObjectType = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(256)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Objects", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Objects_AspNetUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "UserName");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SportEvents",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(256)", nullable: true),
                     Discipline = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     SkillLevel = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     ObjectId = table.Column<int>(type: "int", nullable: false),
-                    Price = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     AmountOfPlayers = table.Column<int>(type: "int", nullable: false),
                     Time = table.Column<int>(type: "int", nullable: false),
                     DateWhen = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -197,31 +205,15 @@ namespace Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_SportEvents", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_SportEvents_AspNetUsers_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "UserName");
+                    table.ForeignKey(
                         name: "FK_SportEvents_Objects_ObjectId",
                         column: x => x.ObjectId,
                         principalTable: "Objects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TopObjects",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Points = table.Column<int>(type: "int", nullable: false),
-                    ObjectId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TopObjects", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TopObjects_Objects_ObjectId",
-                        column: x => x.ObjectId,
-                        principalTable: "Objects",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -256,32 +248,11 @@ namespace Infrastructure.Migrations
 
             migrationBuilder.InsertData(
                 table: "AspNetUsers",
-                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Discriminator", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "Money", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", 0, "e9eaedfc-38fe-4706-8a0c-c8cee39c7140", "myuser@email.com", false, false, null, "MYUSER@EMAIL.COM", "MYUSER@EMAIL.COM", "AQAAAAIAAYagAAAAEMKUrLwZCM/MuipTcurt3pelfQ52HPO7asCtnuYOOa7f5ib5cHtlpcEGt8cZjy2fEg==", null, false, "8f5c1c41-d202-43a2-8e49-f16009e2dff8", false, "myuser@email.com" },
-                    { "d3e7c295-d723-4d8e-8c39-be6107f44020", 0, "1022e327-5cf7-493b-9747-2b7bad9ac67e", "admin@email.com", false, false, null, "ADMIN@EMAIL.COM", "ADMIN@EMAIL.COM", "AQAAAAIAAYagAAAAEJsH5Eq2gn6erek1DTsAEQ4py9jGK+zXzsWFH9/LH0U78RibYGKmF8W8y2qdVej7sA==", null, false, "9d29e828-4c8c-42c7-aaf1-af56f88f4537", false, "admin@email.com" }
-                });
-
-            migrationBuilder.InsertData(
-                table: "Objects",
-                columns: new[] { "Id", "Adress", "City", "Description", "Name", "ObjectType" },
-                values: new object[,]
-                {
-                    { 1, "Tadeusza Ptaszyckiego 6, 31-979 Kraków", "Krakow", "", "Com-Com Zone", "Hall" },
-                    { 2, "Wawelska 3, 02-034 Warszawa", "Warszawa", "", "III Ogród Jordanowski", "Sports_field" },
-                    { 3, "Nowowiejska 37B, 02-079 Warszawa", "Warszawa", "", "Ośrodek Sportu i Rekreacji Dzielnicy Ochota", "Hall" },
-                    { 4, "Siennicka 40B, 04-393 Warszawa", "Warszawa", "", "OSiR Praga-Południe: Hala Sportowa Siennicka", "Hall" },
-                    { 5, "Michała Ossowskiego 25, 03-542 Warszawa", "Warszawa", "", "OSiR Targówek Hala Sportowa", "Hall" },
-                    { 6, "al. 29 Listopada 58, 31-425 Kraków", "Krakow", "", "Hala Sportowa, Uniwersytet Rolniczy w Krakowie", "Hall" },
-                    { 7, "Kamienna 17, 30-001 Kraków", "Krakow", "", "Centrum Sportu i Rekreacji Politechniki Krakowskiej", "Hall" },
-                    { 8, "Kazimierza Czapińskiego 5, 30-048 Kraków", "Krakow", "", "Hala sportowa przy IX LO", "Hall" },
-                    { 9, "Niebieska 15, 30-685 Kraków", "Krakow", "", "Hala Sportowa Orzeł Piaski Wielkie", "Hall" },
-                    { 10, "Aleja Marszałka Ferdynanda Focha 40, 30-119 Kraków", "Krakow", "", "Hala 100-lecia KS Cracovia wraz z Centrum Sportu Niepełnosprawnych", "Hall" },
-                    { 11, "ul. Pułtuska 13, 53-116 Wrocław", "Wroclaw", "", "KKT Wrocław Stowarzyszenie Krzycki Klub Tenisowy", "Hall" },
-                    { 12, "ul. Paderewskiego 35", "Wroclaw", "", "Hala tenisowa i korty tenisowe AWF", "Hall" },
-                    { 13, "ul. Góralska 5", "Wroclaw", "", "Centrum sportowe Hasta La Vista", "Hall" },
-                    { 14, "ul. Kozanowska 69", "Wroclaw", "", "Centrum sportu i rekreacji Sportwerk", "Hall" }
+                    { "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612", 0, "bd54ab02-feaa-4db6-a377-738490ced651", "UserEntity", "myuser@email.com", false, false, null, 100.0, "MYUSER@EMAIL.COM", "MYUSER@EMAIL.COM", "AQAAAAIAAYagAAAAEEW2bsUBbgCS+0f9kW4hamOz2G7Sl7MVHJ6wcTB+MJ022XdjivrQcx0Y62zAZio2yA==", null, false, "871d3e5d-9505-4fe4-80fa-548a9c139fd4", false, "myuser@email.com" },
+                    { "d3e7c295-d723-4d8e-8c39-be6107f44020", 0, "ac826523-c8cf-47ea-9c9d-e9cfb31acd11", "UserEntity", "admin@email.com", false, false, null, 100.0, "ADMIN@EMAIL.COM", "ADMIN@EMAIL.COM", "AQAAAAIAAYagAAAAEFGLd+eNjBotE1l3R938H4rjGpX3tD/mmodCQWzUTqCL1g42/ffHkz3lRzJ1atI52g==", null, false, "8769b43c-f7d5-4188-99ef-4d3cde425e59", false, "admin@email.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -294,23 +265,34 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "SportEvents",
-                columns: new[] { "Id", "AmountOfPlayers", "CreatedBy", "DateWhen", "Description", "Discipline", "IsMultiSportCard", "Name", "ObjectId", "Price", "SkillLevel", "Time" },
+                table: "Objects",
+                columns: new[] { "Id", "Adress", "City", "CreatedBy", "Description", "Name", "ObjectType", "PricePerHour" },
                 values: new object[,]
                 {
-                    { 1, 12, "myuser@email.com", new DateTime(2024, 8, 24, 16, 19, 1, 241, DateTimeKind.Local).AddTicks(8423), "Desc 1", "Football", true, "", 14, 20.0m, "Amateur", 60 },
-                    { 2, 6, "myuser@email.com", new DateTime(2024, 8, 24, 16, 19, 1, 241, DateTimeKind.Local).AddTicks(8644), "Desc 2", "Football", true, "", 4, 22.0m, "Amateur", 30 },
-                    { 3, 10, "myuser@email.com", new DateTime(2024, 8, 24, 16, 19, 1, 241, DateTimeKind.Local).AddTicks(8665), "Desc 3", "Football", false, "", 12, 23.0m, "Amateur", 120 }
+                    { 1, "Tadeusza Ptaszyckiego 6, 31-979 Kraków", "Krakow", "myuser@email.com", "", "Com-Com Zone", "Hall", 200.0 },
+                    { 2, "Wawelska 3, 02-034 Warszawa", "Warszawa", "myuser@email.com", "", "III Ogród Jordanowski", "Sports_field", 200.0 },
+                    { 3, "Nowowiejska 37B, 02-079 Warszawa", "Warszawa", "myuser@email.com", "", "Ośrodek Sportu i Rekreacji Dzielnicy Ochota", "Hall", 200.0 },
+                    { 4, "Siennicka 40B, 04-393 Warszawa", "Warszawa", "myuser@email.com", "", "OSiR Praga-Południe: Hala Sportowa Siennicka", "Hall", 200.0 },
+                    { 5, "Michała Ossowskiego 25, 03-542 Warszawa", "Warszawa", "myuser@email.com", "", "OSiR Targówek Hala Sportowa", "Hall", 200.0 },
+                    { 6, "al. 29 Listopada 58, 31-425 Kraków", "Krakow", "myuser@email.com", "", "Hala Sportowa, Uniwersytet Rolniczy w Krakowie", "Hall", 200.0 },
+                    { 7, "Kamienna 17, 30-001 Kraków", "Krakow", "myuser@email.com", "", "Centrum Sportu i Rekreacji Politechniki Krakowskiej", "Hall", 200.0 },
+                    { 8, "Kazimierza Czapińskiego 5, 30-048 Kraków", "Krakow", "myuser@email.com", "", "Hala sportowa przy IX LO", "Hall", 200.0 },
+                    { 9, "Niebieska 15, 30-685 Kraków", "Krakow", "myuser@email.com", "", "Hala Sportowa Orzeł Piaski Wielkie", "Hall", 200.0 },
+                    { 10, "Aleja Marszałka Ferdynanda Focha 40, 30-119 Kraków", "Krakow", "myuser@email.com", "", "Hala 100-lecia KS Cracovia wraz z Centrum Sportu Niepełnosprawnych", "Hall", 200.0 },
+                    { 11, "ul. Pułtuska 13, 53-116 Wrocław", "Wroclaw", "myuser@email.com", "", "KKT Wrocław Stowarzyszenie Krzycki Klub Tenisowy", "Hall", 200.0 },
+                    { 12, "ul. Paderewskiego 35", "Wroclaw", "myuser@email.com", "", "Hala tenisowa i korty tenisowe AWF", "Hall", 200.0 },
+                    { 13, "ul. Góralska 5", "Wroclaw", "myuser@email.com", "", "Centrum sportowe Hasta La Vista", "Hall", 200.0 },
+                    { 14, "ul. Kozanowska 69", "Wroclaw", "myuser@email.com", "", "Centrum sportu i rekreacji Sportwerk", "Hall", 200.0 }
                 });
 
             migrationBuilder.InsertData(
-                table: "TopObjects",
-                columns: new[] { "Id", "ObjectId", "Points" },
+                table: "SportEvents",
+                columns: new[] { "Id", "AmountOfPlayers", "CreatedBy", "DateWhen", "Discipline", "IsMultiSportCard", "Name", "ObjectId", "SkillLevel", "Time" },
                 values: new object[,]
                 {
-                    { 1, 12, 90 },
-                    { 2, 13, 21 },
-                    { 3, 14, 66 }
+                    { 1, 12, "myuser@email.com", new DateTime(2026, 11, 22, 10, 48, 46, 44, DateTimeKind.Local).AddTicks(4061), "Football", true, "", 14, "Amateur", 60 },
+                    { 2, 6, "myuser@email.com", new DateTime(2026, 11, 22, 10, 48, 46, 44, DateTimeKind.Local).AddTicks(4177), "Football", true, "", 4, "Amateur", 30 },
+                    { 3, 10, "myuser@email.com", new DateTime(2026, 11, 22, 10, 48, 46, 44, DateTimeKind.Local).AddTicks(4244), "Football", false, "", 12, "Amateur", 120 }
                 });
 
             migrationBuilder.CreateIndex(
@@ -358,13 +340,18 @@ namespace Infrastructure.Migrations
                 column: "SportEventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SportEvents_ObjectId",
-                table: "SportEvents",
-                column: "ObjectId");
+                name: "IX_Objects_CreatedBy",
+                table: "Objects",
+                column: "CreatedBy");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TopObjects_ObjectId",
-                table: "TopObjects",
+                name: "IX_SportEvents_CreatedBy",
+                table: "SportEvents",
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_SportEvents_ObjectId",
+                table: "SportEvents",
                 column: "ObjectId");
         }
 
@@ -390,19 +377,16 @@ namespace Infrastructure.Migrations
                 name: "EventAssigners");
 
             migrationBuilder.DropTable(
-                name: "TopObjects");
-
-            migrationBuilder.DropTable(
                 name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
                 name: "SportEvents");
 
             migrationBuilder.DropTable(
                 name: "Objects");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

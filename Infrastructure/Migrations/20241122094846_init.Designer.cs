@@ -12,8 +12,8 @@ using SportEventAppApi.Config;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(SportEventAppDbContext))]
-    [Migration("20241101180000_initialDataChange")]
-    partial class initialDataChange
+    [Migration("20241122094846_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -68,7 +68,7 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("CreatedBy")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -86,6 +86,8 @@ namespace Infrastructure.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CreatedBy");
 
                     b.ToTable("Objects");
 
@@ -258,8 +260,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasColumnType("nvarchar(256)");
 
                     b.Property<DateTime>("DateWhen")
                         .HasColumnType("datetime2");
@@ -287,6 +288,8 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
                     b.HasIndex("ObjectId");
 
                     b.ToTable("SportEvents");
@@ -297,7 +300,7 @@ namespace Infrastructure.Migrations
                             Id = 1,
                             AmountOfPlayers = 12,
                             CreatedBy = "myuser@email.com",
-                            DateWhen = new DateTime(2026, 11, 1, 19, 0, 0, 313, DateTimeKind.Local).AddTicks(7099),
+                            DateWhen = new DateTime(2026, 11, 22, 10, 48, 46, 44, DateTimeKind.Local).AddTicks(4061),
                             Discipline = "Football",
                             IsMultiSportCard = true,
                             Name = "",
@@ -310,7 +313,7 @@ namespace Infrastructure.Migrations
                             Id = 2,
                             AmountOfPlayers = 6,
                             CreatedBy = "myuser@email.com",
-                            DateWhen = new DateTime(2026, 11, 1, 19, 0, 0, 313, DateTimeKind.Local).AddTicks(7227),
+                            DateWhen = new DateTime(2026, 11, 22, 10, 48, 46, 44, DateTimeKind.Local).AddTicks(4177),
                             Discipline = "Football",
                             IsMultiSportCard = true,
                             Name = "",
@@ -323,54 +326,13 @@ namespace Infrastructure.Migrations
                             Id = 3,
                             AmountOfPlayers = 10,
                             CreatedBy = "myuser@email.com",
-                            DateWhen = new DateTime(2026, 11, 1, 19, 0, 0, 313, DateTimeKind.Local).AddTicks(7252),
+                            DateWhen = new DateTime(2026, 11, 22, 10, 48, 46, 44, DateTimeKind.Local).AddTicks(4244),
                             Discipline = "Football",
                             IsMultiSportCard = false,
                             Name = "",
                             ObjectId = 12,
                             SkillLevel = "Amateur",
                             Time = 120
-                        });
-                });
-
-            modelBuilder.Entity("Infrastructure.Entities.TopObjectsEntity", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("ObjectId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Points")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ObjectId");
-
-                    b.ToTable("TopObjects");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ObjectId = 12,
-                            Points = 90
-                        },
-                        new
-                        {
-                            Id = 2,
-                            ObjectId = 13,
-                            Points = 21
-                        },
-                        new
-                        {
-                            Id = 3,
-                            ObjectId = 14,
-                            Points = 66
                         });
                 });
 
@@ -494,6 +456,7 @@ namespace Infrastructure.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
@@ -621,15 +584,15 @@ namespace Infrastructure.Migrations
                         {
                             Id = "6a4f2cab-fba0-4634-b4fd-3d87b8bd5612",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "114c9db1-bbf4-4f97-bf71-51605000efc6",
+                            ConcurrencyStamp = "bd54ab02-feaa-4db6-a377-738490ced651",
                             Email = "myuser@email.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "MYUSER@EMAIL.COM",
                             NormalizedUserName = "MYUSER@EMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFG8NDtUY7vwvc/SdB3DD+DC/DqisIpP3i/kflskrpCT/GomgHTSD76oBimFekGlUw==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEEW2bsUBbgCS+0f9kW4hamOz2G7Sl7MVHJ6wcTB+MJ022XdjivrQcx0Y62zAZio2yA==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "b402de0c-46d9-4f4e-ac08-b28489a5919b",
+                            SecurityStamp = "871d3e5d-9505-4fe4-80fa-548a9c139fd4",
                             TwoFactorEnabled = false,
                             UserName = "myuser@email.com",
                             Money = 100.0
@@ -638,15 +601,15 @@ namespace Infrastructure.Migrations
                         {
                             Id = "d3e7c295-d723-4d8e-8c39-be6107f44020",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "ac892bfa-aa37-414f-987e-089c4042107b",
+                            ConcurrencyStamp = "ac826523-c8cf-47ea-9c9d-e9cfb31acd11",
                             Email = "admin@email.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@EMAIL.COM",
                             NormalizedUserName = "ADMIN@EMAIL.COM",
-                            PasswordHash = "AQAAAAIAAYagAAAAEFfC78M2DvGk5jqt7YwhdRhXooCJBT0MMnoGsZivOBfxWLV1SwWZTTTGrRr2gJyw5w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFGLd+eNjBotE1l3R938H4rjGpX3tD/mmodCQWzUTqCL1g42/ffHkz3lRzJ1atI52g==",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "2df51cc8-79ae-48e4-a18a-2fab26e44f85",
+                            SecurityStamp = "8769b43c-f7d5-4188-99ef-4d3cde425e59",
                             TwoFactorEnabled = false,
                             UserName = "admin@email.com",
                             Money = 100.0
@@ -664,26 +627,35 @@ namespace Infrastructure.Migrations
                     b.Navigation("SportEvent");
                 });
 
+            modelBuilder.Entity("Infrastructure.Entities.ObjectEntity", b =>
+                {
+                    b.HasOne("Infrastructure.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .HasPrincipalKey("UserName")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Infrastructure.Entities.SportEventEntity", b =>
                 {
+                    b.HasOne("Infrastructure.Entities.UserEntity", "User")
+                        .WithMany()
+                        .HasForeignKey("CreatedBy")
+                        .HasPrincipalKey("UserName")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("Infrastructure.Entities.ObjectEntity", "Object")
                         .WithMany("SportEvents")
                         .HasForeignKey("ObjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Object");
-                });
 
-            modelBuilder.Entity("Infrastructure.Entities.TopObjectsEntity", b =>
-                {
-                    b.HasOne("Infrastructure.Entities.ObjectEntity", "Object")
-                        .WithMany()
-                        .HasForeignKey("ObjectId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Object");
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

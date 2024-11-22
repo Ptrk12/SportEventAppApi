@@ -90,23 +90,7 @@ namespace Managers.managers
                         sportEvent.IsActive = true;
                         sportEvent.CurrentUserAssignedToEvent = true;
 
-                        //WYDZIELIC DO OSOBNEJ FUNKCJI !!!!!!!!!!!!
-                        var sportObj = await _objectRepository.GetObjectById(item.ObjectId);
-
-                        if (sportObj?.PricePerHour != null)
-                        {
-                            if (item.AmountOfPlayers != 0)
-                            {
-                                var price = (sportObj.PricePerHour * item.Time) / item.AmountOfPlayers;
-
-                                sportEvent.Price = price;
-                            }
-                            else
-                            {
-                                sportEvent.Price = 1;
-                            }
-
-                        }
+                        sportEvent.Price = await CaclulateSportEventPrice(item);
 
                         if (sportEvent.IsActive == false)
                         {                          
@@ -134,6 +118,23 @@ namespace Managers.managers
             }
         }
 
+        private async Task<double> CaclulateSportEventPrice(SportEventEntity item)
+        {
+            var sportObj = await _objectRepository.GetObjectById(item.ObjectId);
+            double result = 0;
+
+            if (sportObj?.PricePerHour != null)
+            {
+                if (item.AmountOfPlayers != 0)
+                {
+                    var price = (sportObj.PricePerHour * item.Time) / item.AmountOfPlayers;
+
+                    result = price;
+                }        
+            }
+            return result;
+        }
+
         public async Task<IEnumerable<SportEvent>> GetAllSportEvents()
         {
             var dataDb = await _sportEventsRepository.GetAllSportEvents();
@@ -147,23 +148,7 @@ namespace Managers.managers
                 sportEvent.IsActive = true;
                 var assignersInTheEventString = await _sportEventsRepository.GetAssignersInEvent(item.Id);
 
-                //WYDZIELIC DO OSOBNEJ FUNKCJI !!!!!!!!!!!!!!
-                var sportObj = await _objectRepository.GetObjectById(item.ObjectId);
-
-                if(sportObj?.PricePerHour != null)
-                {
-                    if(item.AmountOfPlayers != 0)
-                    {
-                        var price = (sportObj.PricePerHour * item.Time) / item.AmountOfPlayers;
-
-                        sportEvent.Price = price;
-                    }
-                    else
-                    {
-                        sportEvent.Price = 1;
-                    }
-
-                }
+                sportEvent.Price = await CaclulateSportEventPrice(item);
 
                 if (!string.IsNullOrEmpty(assignersInTheEventString))
                 {
