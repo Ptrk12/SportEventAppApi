@@ -223,14 +223,31 @@ namespace Managers.managers
             //DODAC SPRAWDZANIE CZY DO EVENTU PRZYPISANI SA LUDZIE JESLI TAK TO NIE MOZNA USUWAC !
             var result = false;
             var sportEventDb = await _sportEventsRepository.GetSportEventById(id);
+            var assignersInTheEventString = await _sportEventsRepository.GetAssignersInEvent(id);
+            var price = await CaclulateSportEventPrice(sportEventDb);
+
 
             if (!CheckCanModify(sportEventDb))
             {
                 return result;
             }
 
+            if (!string.IsNullOrEmpty(assignersInTheEventString))
+            {
+                var assignersInTheEvent = JsonSerializer.Deserialize<List<string>>(assignersInTheEventString);
+                if(assignersInTheEvent?.Count > 1)
+                {
+                    return result;
+                }
+                else
+                {
+                    await ReturnMoneyIfEventExpired(assignersInTheEvent, price);
+                }
+            }
+
             result = await _sportEventsRepository.DeleteSportEvent(id);
             return result;
+
         }
 
         public async Task<bool> AssignOrRemoveFromEvent(int sportEventId, string operationType)
