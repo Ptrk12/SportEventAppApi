@@ -220,7 +220,6 @@ namespace Managers.managers
 
         public async Task<bool> DeleteSportEvent(int id)
         {
-            //DODAC SPRAWDZANIE CZY DO EVENTU PRZYPISANI SA LUDZIE JESLI TAK TO NIE MOZNA USUWAC !
             var result = false;
             var sportEventDb = await _sportEventsRepository.GetSportEventById(id);
             var assignersInTheEventString = await _sportEventsRepository.GetAssignersInEvent(id);
@@ -362,20 +361,22 @@ namespace Managers.managers
 
                 if (objectDd != null)
                 {
-                    if (eventDb.AmountOfPlayers != 0)
-                    {
-                        var price = (objectDd.PricePerHour * eventDb.Time) / eventDb.AmountOfPlayers;
-
-                        result.Price = price;
-                    }
-                    else
-                    {
-                        result.Price = 1;
-                    }
+                    result.Price = await CaclulateSportEventPrice(eventDb);
                 }
                 return result;
             }
             return new SportEvent();
+        }
+
+        public async Task<IEnumerable<string>> GetAssignersInSportEvent(int sportEventId)
+        {
+            var peopleInEvent = await _sportEventsRepository.GetAssignersInEvent(sportEventId);
+
+            if (!string.IsNullOrEmpty(peopleInEvent))
+            {
+                return JsonSerializer.Deserialize<IEnumerable<string>>(peopleInEvent);
+            }
+            return Enumerable.Empty<string>();
         }
     }
     public interface ISportEventManager
@@ -387,5 +388,6 @@ namespace Managers.managers
         Task<bool> UpdateSportEvent(CreateSportEventReq sportEvent, int id);
         Task<bool> DeleteSportEvent(int id);
         Task<SportEvent> GetSportEventById(int id);
+        Task<IEnumerable<string>> GetAssignersInSportEvent(int sportEventId);
     }
 }
