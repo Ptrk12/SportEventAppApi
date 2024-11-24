@@ -149,7 +149,7 @@ namespace SportEventAppApi.Controllers
         /// Get sportsevent by id
         /// </summary>
         /// <param name="id">Id of the sports event</param>
-        /// <response code="202">Success</response>
+        /// <response code="200">Success</response>
         /// <returns>Sports event</returns>
         [HttpGet]
         [Route("{id}")]
@@ -158,6 +158,22 @@ namespace SportEventAppApi.Controllers
         public async Task<IActionResult> GetSportEventById(int id)
         {
             var result = await _sportEventManager.GetSportEventById(id);
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// Get people assigned to sport event
+        /// </summary>
+        /// <param name="id">Id of the sport event</param>
+        /// <response code="200">Success</response>
+        /// <returns>People assigned to event</returns>
+        [HttpGet]
+        [Route("{id}/people-in-event")]
+        //[Authorize]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> GetPeopleAssignedToEvent(int id)
+        {
+            var result = await _sportEventManager.GetAssignersInSportEvent(id);
             return Ok(result);
         }
     }
