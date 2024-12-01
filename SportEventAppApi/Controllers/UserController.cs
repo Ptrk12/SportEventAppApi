@@ -1,4 +1,5 @@
-﻿using Managers.managers;
+﻿using ApplicationCore.Models.req;
+using Managers.managers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,6 +27,20 @@ namespace SportEventAppApi.Controllers
         {
             var result = await _userManager.GetUserInfo();
             return Ok(result);
+        }
+
+        ///<summary>
+        ///  Change password
+        /// </summary>
+        /// <response code="204">Success</response>
+        /// <response code="409">Something went wrong</response>
+        [HttpPost]
+        [Authorize]
+        [Route("change-password")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordReq req)
+        {
+            var result = await _userManager.ChangePassword(req);
+            return result == true ? NoContent() : Conflict();
         }
     }
 }

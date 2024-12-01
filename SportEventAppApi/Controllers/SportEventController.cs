@@ -67,7 +67,7 @@ namespace SportEventAppApi.Controllers
         /// <response code="409">A conflict occurred, sport event was not created</response>
         [HttpPost]
         [Authorize]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public async Task<IActionResult> CreateSportEvent(CreateSportEventReq req)
         {
@@ -107,7 +107,7 @@ namespace SportEventAppApi.Controllers
         public async Task<IActionResult> UpdateSportEvent(CreateSportEventReq req, int id)
         {
             var result = await _sportEventManager.UpdateSportEvent(req,id);
-            return result == true ? StatusCode(201) : Conflict();
+            return result == true ? StatusCode(204) : Conflict();
         }
 
         /// <summary>
