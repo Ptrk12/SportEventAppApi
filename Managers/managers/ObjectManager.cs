@@ -79,7 +79,7 @@ namespace Managers.managers
                 ObjectBaseInfo objBaseInfo = new ObjectBaseInfo()
                 {
                     Id = item.Id,
-                    Name = item.Name
+                    Name = item.Name + " " +item.City
                 };
 
                 result.Add(objBaseInfo);
