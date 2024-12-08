@@ -234,11 +234,7 @@ namespace Managers.managers
             if (!string.IsNullOrEmpty(assignersInTheEventString))
             {
                 var assignersInTheEvent = JsonSerializer.Deserialize<List<string>>(assignersInTheEventString);
-                if(assignersInTheEvent?.Count > 1)
-                {
-                    return result;
-                }
-                else
+                if(assignersInTheEvent?.Count > 0)
                 {
                     await ReturnMoneyIfEventExpired(assignersInTheEvent, price);
                 }
