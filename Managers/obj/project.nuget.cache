@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "c/kukOaN71/p1cV++dyehpOcTvZ+8uQF2rX/iSnAKGaxFqam7TdwUg34VN+390BqcaB+FkSosW+iimYoX2g3CA==",
+  "dgSpecHash": "kEJVmuWaG69Yd0niBYlUFiIUcuhRsgMKmIYtwCi8kkXUennOc11/NQ8ZIFLJAXzQP3P2pw1kXzy538Vlf94ojA==",
   "success": true,
   "projectFilePath": "C:\\Users\\Admin\\Desktop\\SportEventApi\\Managers\\Managers.csproj",
   "expectedPackageFiles": [
@@ -55,6 +55,8 @@
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.sqlserver.server\\1.0.0\\microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.win32.systemevents\\6.0.0\\microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\mono.texttemplating\\2.2.1\\mono.texttemplating.2.2.1.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\serilog\\4.2.0\\serilog.4.2.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\serilog.sinks.console\\6.0.0\\serilog.sinks.console.6.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.codedom\\4.4.0\\system.codedom.4.4.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.collections.immutable\\6.0.0\\system.collections.immutable.6.0.0.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\system.composition\\6.0.0\\system.composition.6.0.0.nupkg.sha512",

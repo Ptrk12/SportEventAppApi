@@ -1,6 +1,6 @@
 using Infrastructure.Entities;
-using Microsoft.AspNetCore.Identity;
 using SportEventAppApi.DIConfig;
+using Serilog;
 
 namespace SportEventAppApi
 {
@@ -11,6 +11,10 @@ namespace SportEventAppApi
             var builder = WebApplication.CreateBuilder(args);
 
             builder.RegisterDi();
+
+            Log.Logger = new LoggerConfiguration()
+                .ReadFrom.Configuration(builder.Configuration).CreateLogger();
+        
 
             var app = builder.Build();
 

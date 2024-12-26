@@ -2,6 +2,8 @@
 using ApplicationCore.Models.req;
 using Infrastructure.Mappers;
 using Infrastructure.Repositories;
+using Microsoft.Extensions.Logging;
+using System.Runtime.Serialization;
 
 namespace Managers.managers
 {
@@ -10,15 +12,18 @@ namespace Managers.managers
         private readonly IObjectRepository _objectRepository;
         private readonly ISportEventsRepository _sportEventsRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ILogger<ObjectManager> _log;
 
         public ObjectManager(
             IObjectRepository objectRepository, 
             ISportEventsRepository sportEventsRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            ILogger<ObjectManager> log)
         {
             _objectRepository = objectRepository;
             _sportEventsRepository = sportEventsRepository;
             _userRepository = userRepository;
+            _log = log;
         }
 
         public async Task<bool> CreateObject(CreateObjectReq req)
@@ -27,6 +32,10 @@ namespace Managers.managers
             var entity = ObjectMapper.FromClassToEntityInsertReq(req, null);
             entity.CreatedBy = createdBy;
             var result = await _objectRepository.CreateObject(entity);
+
+            if (!result)
+                _log.LogWarning("There were problem with creating event by {createdBy}", createdBy);
+
             return result;
         }
 
@@ -55,6 +64,10 @@ namespace Managers.managers
                 return result;
             }
             result = await _objectRepository.DeleteObject(id);
+
+            if (!result)
+                _log.LogWarning("There were problem with removing object with id: {id}", id);
+
             return result;
         }
 
@@ -106,6 +119,10 @@ namespace Managers.managers
                 req.Id = objectDb.Id;
                 result = await _objectRepository.Updateobject(id, req);
             }
+
+            if (!result)
+                _log.LogWarning("There were problem with updating object with id: {id}", id);
+
             return result;
         }
     }

@@ -3,6 +3,7 @@ using ApplicationCore.Models.req;
 using Infrastructure.Entities;
 using Infrastructure.Mappers;
 using Infrastructure.Repositories;
+using Microsoft.Extensions.Logging;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 
@@ -13,15 +14,18 @@ namespace Managers.managers
         private readonly ISportEventsRepository _sportEventsRepository;
         private readonly IObjectRepository _objectRepository;
         private readonly IUserRepository _userRepository;
+        private readonly ILogger<SportEventManager> _log;
 
         public SportEventManager(
             ISportEventsRepository sportEventsRepository,
             IObjectRepository objectRepository,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            ILogger<SportEventManager> log)
         {
             _sportEventsRepository = sportEventsRepository;
             _objectRepository = objectRepository;
             _userRepository = userRepository;
+            _log = log;
         }
 
         public async Task<bool> CreateSportEvent(CreateSportEventReq sportEvent)
@@ -50,6 +54,7 @@ namespace Managers.managers
                         }
                         else
                         {
+                            _log.LogInformation("insufficient funds: {currentUserMoney} for this sport event: {cost}", currentUserMoney,cost);
                             return false;
                         }
 
@@ -68,6 +73,10 @@ namespace Managers.managers
                     result = await _sportEventsRepository.CreateAssignedPeopleRecord(assigners);
                 }
             }
+
+            if (!result)
+                _log.LogWarning("There were problem with creating sport event by {createdBy}", createdBy);
+
             return result;
         }
 
@@ -215,6 +224,9 @@ namespace Managers.managers
                     }
                 }
             }
+
+            _log.LogWarning("There were problem with updating sport event with id: {id}", id);
+
             return result;
         }
 
@@ -241,6 +253,10 @@ namespace Managers.managers
             }
 
             result = await _sportEventsRepository.DeleteSportEvent(id);
+
+            if(!result)
+                _log.LogWarning("There were problem with removing sport event with id: {id}", id);
+
             return result;
 
         }
