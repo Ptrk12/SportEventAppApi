@@ -1,7 +1,9 @@
 ﻿using ApplicationCore.Models.req;
+using Castle.Core.Logging;
 using Infrastructure.Entities;
 using Infrastructure.Repositories;
 using Managers.managers;
+using Microsoft.Extensions.Logging;
 using Moq;
 using System.Text.Json;
 
@@ -13,16 +15,19 @@ namespace Tests
         private readonly Mock<ISportEventsRepository> _mockSportEventsRepository;
         private readonly Mock<IUserRepository> _mockUserRepository;
         private readonly SportEventManager _sportEventManager;
+        private readonly Mock<ILogger<SportEventManager>> _log;
 
         public SportEventTests()
         {
             _mockSportEventsRepository = new Mock<ISportEventsRepository>();
             _mockObjectRepository = new Mock<IObjectRepository>();
             _mockUserRepository = new Mock<IUserRepository>();
+            _log = new Mock<ILogger<SportEventManager>>();
             _sportEventManager = new SportEventManager(
                 _mockSportEventsRepository.Object,
                 _mockObjectRepository.Object,
-                _mockUserRepository.Object
+                _mockUserRepository.Object,
+                _log.Object
             );
         }
 
