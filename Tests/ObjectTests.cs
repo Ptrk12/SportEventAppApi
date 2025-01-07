@@ -1,12 +1,9 @@
-using ApplicationCore.Models;
 using ApplicationCore.Models.req;
-using Castle.Core.Logging;
 using Infrastructure.Entities;
 using Infrastructure.Enums;
 using Infrastructure.Repositories;
 using Managers.managers;
 using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Engine;
 using Moq;
 
 
@@ -147,7 +144,7 @@ namespace Tests
 
             // Assert
             Assert.Equal(2, result.Count());
-            Assert.Contains(result, x => x.Name == "Object 1");
+            Assert.Contains(result, x => x.Name == "Object 1 Krakow");
         }
 
         [Fact]
