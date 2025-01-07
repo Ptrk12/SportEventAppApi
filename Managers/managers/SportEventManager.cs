@@ -33,45 +33,44 @@ namespace Managers.managers
             var createdBy = _userRepository.GetUserEmailFromToken();
             var objectDb = await _objectRepository.GetObjectById(sportEvent.ObjectId);
             var result = false;
-            if(objectDb != null)
+            if (objectDb != null)
             {
                 var sportEventDb = SportEventMapper.FromSportEventToEntityInsertReq(sportEvent, objectDb);
                 sportEventDb.CreatedBy = createdBy;
+
+
+                var currentUserMoney = await _userRepository.GetUserMone(createdBy);
+
+                if (currentUserMoney != null)
+                {
+                    var cost = (sportEvent.Time * objectDb.PricePerHour) / sportEvent.AmountOfPlayers;
+                    if (currentUserMoney - cost > 0)
+                    {
+                        double money = (double)currentUserMoney - cost;
+
+                        await _userRepository.UpdateUserMoney(createdBy, money);
+                    }
+                    else
+                    {
+                        _log.LogInformation("insufficient funds: {currentUserMoney} for this sport event: {cost}", currentUserMoney, cost);
+                        return false;
+                    }
+
+                }
+
+                JsonArray assignersArray = new JsonArray(createdBy);
+                var assignersArrayJson = JsonSerializer.Serialize(assignersArray);
                 var executeInfo = await _sportEventsRepository.CreateSportEvent(sportEventDb);
 
-                if (executeInfo.Result)
+                EventAssignersEntity assigners = new EventAssignersEntity()
                 {
-                    var currentUserMoney = await _userRepository.GetUserMone(createdBy);
+                    EventId = executeInfo.resultEntity.Id,
+                    SportEvent = executeInfo.resultEntity,
+                    AssignedPeople = assignersArrayJson
+                };
 
-                    if(currentUserMoney != null)
-                    {
-                        var cost = (sportEvent.Time * objectDb.PricePerHour) / sportEvent.AmountOfPlayers;
-                        if(currentUserMoney - cost > 0)
-                        {
-                            double money = (double)currentUserMoney - cost;
-                            
-                            await _userRepository.UpdateUserMoney(createdBy, money);
-                        }
-                        else
-                        {
-                            _log.LogInformation("insufficient funds: {currentUserMoney} for this sport event: {cost}", currentUserMoney,cost);
-                            return false;
-                        }
+                result = await _sportEventsRepository.CreateAssignedPeopleRecord(assigners);
 
-                    }                   
-
-                    JsonArray assignersArray = new JsonArray(createdBy);
-                    var assignersArrayJson = JsonSerializer.Serialize(assignersArray);
-
-                    EventAssignersEntity assigners = new EventAssignersEntity()
-                    {
-                        EventId = executeInfo.resultEntity.Id,
-                        SportEvent = executeInfo.resultEntity,
-                        AssignedPeople = assignersArrayJson
-                    };
-
-                    result = await _sportEventsRepository.CreateAssignedPeopleRecord(assigners);
-                }
             }
 
             if (!result)
@@ -88,10 +87,10 @@ namespace Managers.managers
 
             if (!string.IsNullOrEmpty(currentUserEmail))
             {
-                foreach(var item in dataDb)
+                foreach (var item in dataDb)
                 {
                     var usersInEvent = await _sportEventsRepository.GetAssignersInEvent(item.Id);
-                    if(!string.IsNullOrEmpty(usersInEvent) && usersInEvent.Contains(currentUserEmail))
+                    if (!string.IsNullOrEmpty(usersInEvent) && usersInEvent.Contains(currentUserEmail))
                     {
                         var assignersInTheEvent = JsonSerializer.Deserialize<List<string>>(usersInEvent);
                         var sportEvent = SportEventMapper.FromEntityToSportEvent(item);
@@ -102,7 +101,7 @@ namespace Managers.managers
                         sportEvent.Price = await CaclulateSportEventPrice(item);
 
                         if (sportEvent.IsActive == false)
-                        {                          
+                        {
                             await Task.WhenAll(ReturnMoneyIfEventExpired(assignersInTheEvent, sportEvent.Price), _sportEventsRepository.DeleteSportEvent(item.Id));
                             continue;
                         }
@@ -114,12 +113,12 @@ namespace Managers.managers
             return result;
         }
 
-        private async Task ReturnMoneyIfEventExpired(List<string> assigners ,double price)
+        private async Task ReturnMoneyIfEventExpired(List<string> assigners, double price)
         {
-            foreach(var user in assigners)
+            foreach (var user in assigners)
             {
                 var currentUserMoney = await _userRepository.GetUserMone(user);
-                if(currentUserMoney != null)
+                if (currentUserMoney != null)
                 {
                     var userMoneyParsed = (double)currentUserMoney;
                     await _userRepository.UpdateUserMoney(user, userMoneyParsed + price);
@@ -139,7 +138,7 @@ namespace Managers.managers
                     var price = (sportObj.PricePerHour * item.Time) / item.AmountOfPlayers;
 
                     result = price;
-                }        
+                }
             }
             return result;
         }
@@ -151,7 +150,7 @@ namespace Managers.managers
 
             var result = new List<SportEvent>();
 
-            foreach(var item in dataDb)
+            foreach (var item in dataDb)
             {
                 var sportEvent = SportEventMapper.FromEntityToSportEvent(item);
                 sportEvent.IsActive = true;
@@ -164,7 +163,7 @@ namespace Managers.managers
                     var assignersInTheEvent = JsonSerializer.Deserialize<List<string>>(assignersInTheEventString);
                     sportEvent.PeopleAssigned = assignersInTheEvent.Count;
 
-                    if(sportEvent.IsActive == false)
+                    if (sportEvent.IsActive == false)
                     {
                         await ReturnMoneyIfEventExpired(assignersInTheEvent, sportEvent.Price);
                     }
@@ -173,8 +172,8 @@ namespace Managers.managers
                     {
                         sportEvent.CurrentUserAssignedToEvent = true;
                     }
-                }   
-                if(sportEvent.IsActive == false)
+                }
+                if (sportEvent.IsActive == false)
                 {
                     await _sportEventsRepository.DeleteSportEvent(item.Id);
                     continue;
@@ -193,7 +192,7 @@ namespace Managers.managers
             {
                 return true;
             }
-            else if(currentUserEmail == entity.CreatedBy)
+            else if (currentUserEmail == entity.CreatedBy)
             {
                 return true;
             }
@@ -210,12 +209,12 @@ namespace Managers.managers
                 return false;
             }
 
-            if(sportEventDb != null)
+            if (sportEventDb != null)
             {
-                if(sportEvent?.ObjectId != null)
+                if (sportEvent?.ObjectId != null)
                 {
                     var objectDb = await _objectRepository.GetObjectById(sportEvent.ObjectId);
-                    if(objectDb != null)
+                    if (objectDb != null)
                     {
                         var updatedEntity = SportEventMapper.FromSportEventToEntityInsertReq(sportEvent, objectDb);
                         updatedEntity.CreatedBy = sportEventDb.CreatedBy;
@@ -246,7 +245,7 @@ namespace Managers.managers
             if (!string.IsNullOrEmpty(assignersInTheEventString))
             {
                 var assignersInTheEvent = JsonSerializer.Deserialize<List<string>>(assignersInTheEventString);
-                if(assignersInTheEvent?.Count > 0)
+                if (assignersInTheEvent?.Count > 0)
                 {
                     await ReturnMoneyIfEventExpired(assignersInTheEvent, price);
                 }
@@ -254,7 +253,7 @@ namespace Managers.managers
 
             result = await _sportEventsRepository.DeleteSportEvent(id);
 
-            if(!result)
+            if (!result)
                 _log.LogWarning("There were problem with removing sport event with id: {id}", id);
 
             return result;
@@ -268,7 +267,7 @@ namespace Managers.managers
             var currentUserEmail = _userRepository.GetUserEmailFromToken();
             var sportEvent = await _sportEventsRepository.GetSportEventById(sportEventId);
             var objectDb = await _objectRepository.GetObjectById(sportEvent.ObjectId);
-            
+
 
             if (!string.IsNullOrEmpty(currentAssigners))
             {
@@ -281,7 +280,7 @@ namespace Managers.managers
                     if (!currentAssignersArray.Contains(currentUserEmail) && operationType == "add")
                     {
                         currentAssignersArray.Add(currentUserEmail);
-                        if(!await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "add"))
+                        if (!await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "add"))
                         {
                             return false;
                         }
@@ -289,11 +288,11 @@ namespace Managers.managers
                     else if (currentAssignersArray.Contains(currentUserEmail) && operationType == "remove")
                     {
                         currentAssignersArray.Remove(currentUserEmail);
-                        if(!await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "remove"))
+                        if (!await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "remove"))
                         {
                             return false;
                         }
-                    }               
+                    }
                     if (currentAssignersArray.Count != currentAssignersArrayDb.Count)
                     {
                         var currentAssignersJsonArray = JsonSerializer.Serialize(currentAssignersArray);
@@ -308,20 +307,20 @@ namespace Managers.managers
                     var assignersList = new List<string>();
                     assignersList.Add(currentUserEmail);
 
-                    var currentAssignersJsonArray = JsonSerializer.Serialize(assignersList);
-                    result = await _sportEventsRepository.AssignOrRemoveFromEvent(sportEventId, currentAssignersJsonArray);
-
-                    if(!await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "add"))
+                    if (!await OperationOnUserMoney(objectDb, sportEvent, currentUserEmail, "add"))
                     {
                         return false;
                     }
+
+                    var currentAssignersJsonArray = JsonSerializer.Serialize(assignersList);
+                    result = await _sportEventsRepository.AssignOrRemoveFromEvent(sportEventId, currentAssignersJsonArray);
                 }
             }
 
             return result;
         }
 
-        private async Task<bool> OperationOnUserMoney(ObjectEntity objectDb, SportEventEntity sportEvent, string currentUserEmail,string operation)
+        private async Task<bool> OperationOnUserMoney(ObjectEntity objectDb, SportEventEntity sportEvent, string currentUserEmail, string operation)
         {
             if (objectDb?.PricePerHour != null)
             {
@@ -331,22 +330,22 @@ namespace Managers.managers
                     var currentUserMoney = await _userRepository.GetUserMone(currentUserEmail);
                     if (currentUserMoney != null)
                     {
-                        if(operation == "add")
+                        if (operation == "add")
                         {
                             var userMoneyParsed = (double)currentUserMoney;
-                            if(userMoneyParsed - price > 0)
+                            if (userMoneyParsed - price > 0)
                             {
                                 return await _userRepository.UpdateUserMoney(currentUserEmail, userMoneyParsed - price);
                             }
                             else
                             {
                                 return false;
-                            }                         
+                            }
                         }
                         else
                         {
                             var userMoneyParsed = (double)currentUserMoney;
-                            if(userMoneyParsed - price > 0)
+                            if (userMoneyParsed - price > 0)
                             {
                                 return await _userRepository.UpdateUserMoney(currentUserEmail, userMoneyParsed + price);
                             }
@@ -365,7 +364,7 @@ namespace Managers.managers
         public async Task<SportEvent> GetSportEventById(int id)
         {
             var eventDb = await _sportEventsRepository.GetSportEventById(id);
-            if(eventDb != null)
+            if (eventDb != null)
             {
                 var objectDd = await _objectRepository.GetObjectById(eventDb.ObjectId);
 
